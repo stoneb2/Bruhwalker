@@ -23,7 +23,7 @@ do
         if tonumber(web_version) == Version then
             console:log("VectorMath Library successfully loaded")
         else
-            http:download(url, file_name)
+            http:download_file(url, file_name)
             console:log("New VectorMath Library Update Available")
             console:log("Please Reload with F5")
         end

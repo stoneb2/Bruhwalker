@@ -2,8 +2,8 @@ do
     local function AutoUpdate()
         local Version = 1
         local file_name = "VectorMath.lua"
-        local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/BenKat/BenKat.lua?token=ALFJBUQC5TMIXXLYNUHNMY3AMYOOW"
-        local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/BenKat/BenKat.version.txt?token=ALFJBUS5IGWW6Q5XQEKDBHLAMYOYW")
+        local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
+        local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
         console:log("VectorMath Version: "..Version)
         console:log("VectorMath Web Version: "..tonumber(web_version))
         if tonumber(web_version) == Version then

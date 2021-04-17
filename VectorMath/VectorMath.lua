@@ -1,6 +1,6 @@
 --[[
---Initialization line:
-local vec3m = require "VectorMath"
+
+----- PLACE THIS AT THESE LINES AT THE BEGINNING OF YOUR SCRIPT ------------------------------------
 
 --Ensuring that the library is downloaded:
 local file_name = "VectorMath.lua"
@@ -10,11 +10,228 @@ if not file_manager:file_exists(file_name) then
    console:log("VectorMath Library Downloaded")
    console:log("Please Reload with F5")
 end
+
+--Initialization line:
+local vec3m = require "VectorMath"
+
+----- Matrix Functions -----------------------------------------------------------------------------
+
+--Creates a New Matrix
+vec3m.NewMatrix(rows, columns, values)
+
+--Add two matrices
+vec3m.MatrixAdd(m1, m2)
+
+--Subtract two matrices
+vec3m.MatrixSub(m1, m2)
+
+--Multiply two matrices
+vec3m.MatrixMult(m1, m2)
+
+--Matrix Type; Table, Tensor, Number
+vec3m.MatrixType(mtx)
+
+--Copy Matrix
+vec3m.CopyMatrix(m1)
+
+--Concatenate two matrices, horizontal
+vec3m.ConcatH(m1, m2)
+
+--Matrix Gaussian 
+vec3m.DoGauss(mtx)
+
+--Submatrix out of matrix
+vec3m.SubM(m1, i1, j1, i2, j2)
+
+--Get inverted matrix
+vec3m.MatrixInvert(m1)
+
+--Divide two matrices
+vec3m.MatrixDiv(m1, m2)
+
+--Multiply Matrix by Number
+vec3m.MatrixMultNum(m1, num)
+
+--Divide Matrix by Number
+vec3m.MatrixDivNum(m1, num)
+
+--Raise Matrix to a Power
+vec3m.MatrixPower(m1, num)
+
+----- Vector Functions -----------------------------------------------------------------------------
+
+--Converts from Radians to Degrees
+vec3m.R2D(radians)
+
+--Converts from Degrees to Radians
+vec3m.D2R(degrees)
+
+--Add two vectors
+vec3m.Add(vec1, vec2)
+
+--Subtract two vectors
+vec3m.Sub(vec1, vec2)
+
+--Center between two vectors
+vec3m.Center(vec1, vec2)
+
+--Multiplies vector by magnitude
+vec3m.VectorMag(vec, mag)
+
+--Cross product of two vectors
+vec3m.CrossProduct(vec1, vec2)
+
+--Dot product of two vectors
+vec3m.DotProduct(vec1, vec2)
+
+--Vector Magnitude / Length
+vec3m.Magnitude(vec)
+
+--Switches vector origin to local player
+vec3m.local_player_origin(vec)
+
+--Switches vector back to normal league origin
+vec3m.league_origin(vec)
+
+--Projects a vector on a vector
+vec3m.ProjectOn(vec1, vec2)
+
+--Mirrors a vector on a vector
+vec3m.MirrorOn(vec1, vec2)
+
+--Calculates sin of two vectors
+vec3m.Sin(vec1, vec2)
+
+--Calculates cos of two vectors
+vec3m.Cos(vec1, vec2)
+
+--Calculates angle between two vectors
+vec3m.Angle(vec1, vec2)
+
+--Calculates the area between two vectors
+vec3m.AffineArea(vec1, vec2)
+
+--Calculates triangular area between two vectors
+vec3m.TriangleArea(vec1, vec2)
+
+--Rotates vector by phi around x-axis
+vec3m.RotateX(vec, phi)
+
+--Rotates vector by phi around y-axis
+vec3m.RotateY(vec, phi)
+
+--Rotates vector by phi around z-axis
+vec3m.RotateZ(vec, phi)
+
+--Rotates a vector
+vec3m.Rotate(PhiX, PhiY, PhiZ)
+
+--Returns polar value
+vec3m.Polar(vec)
+
+--Returns the angle formed from a vector to both input vectors
+vec3m.AngleBetween(vec1, vec2)
+
+--Returns the unit vector / direction of a vector
+vec3m.Direction(vec)
+
+--Compares both vectors, returns difference
+vec3m.Compare(vec1, vec2)
+
+--Creates a new vector that is rotated 90 degrees right
+vec3m.Perpendicular(vec)
+
+--Creates a new vector that is rotated 90 degrees left
+vec3m.Perpendicular2(vec)
+
+--Extends a vector a distance
+vec3m.Extend(vec, distance)
+
+--Shortens a vector a distance
+vec3m.Shorten(vec, distance)
+
+--Lerps from start to end with percentage length
+vec3m.Lerp(start_vec, end_vec, percentage)
+
+----- Game Functions -------------------------------------------------------------------------------
+
+--Returns size of table
+vec3m.size(table)
+
+--Returns mouse position
+vec3m.GetMousePos()
+
+--Returns distance between two objects
+vec3m.GetDistanceSqr(unit, p2)
+
+--Returns a table of enemy heroes
+vec3m.GetEnemyHeroes()
+
+--Returns a table of ally heroes
+vec3m.GetAllyHeroes()
+
+--Returns shielded health of object
+vec3m.GetShieldedHealth(damageType, target)
+
+--Returns buff count
+vec3m.GotBuff(unit, buffname)
+
+--Checks if unit has a specific buff
+vec3m.HasBuff(unit, buffname)
+
+--Counts enemies within range
+vec3m.GetEnemyCount(pos, range)
+
+--Counts minions within range
+vec3m.GetMinionCount(pos, range)
+
+--Counts jungle monsters within range
+vec3m.GetJungleMinionCount(pos, range)
+
+--Checks if a spell slot is ready to cast
+vec3m.Ready(spell)
+
+--Checks if a unit is valid
+vec3m.IsValid(unit)
+
+--Checks if a unit is under tower
+vec3m.is_under_tower(target)
+
+--Returns closest jungle monster
+vec3m.GetClosestJungle()
+
+--Returns closest minion
+vec3m.GetClosestMinion()
+
+--Returns closest minion to an enemy
+vec3m.GetClosestMinionToEnemy()
+
+--Returns closest jungle monster to an enemy
+vec3m.GetClosestJungleEnemy()
+
+--Checks if a value is in a table
+vec3m.in_list(tab, val)
+
+--Checks if target is invulnerable
+vec3m.is_invulnerable(target)
+
+--Checks if target is immobile
+vec3m.IsImmobile(target)
+
+--Creates a table of items in inventory
+vec3m.GetItems()
+
+--Converts string to item slot variable
+vec3m.SlotSet(slot_str)
+
+--Calculates On-Hit Damage 
+vec3m.OnHitDmg(target, effectiveness)
+
 --]]
 
-do 
+do
     local function AutoUpdate()
-        local Version = 2
+        local Version = 3
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -434,8 +651,8 @@ function vec3m.Angle(vec1, vec2)
     dot = vec3m.DotProduct(vec1, vec2)
     mag1 = vec3m.Magnitude(vec1)
     mag2 = vec3m.Magnitude(vec2)
-    angle = vec3m.R2D(math.acos(dot / (mag1 * mag2)))
-    return angle
+    output = vec3m.R2D(math.acos(dot / (mag1 * mag2)))
+    return output
 end
 
 --Calculates the area between two vectors
@@ -511,7 +728,7 @@ function vec3m.AngleBetween(vec1, vec2)
     mag2 = vec3m.Magnitude(vec2)
     output = vec3m.R2D(math.acos(dot / (mag1 * mag2)))
     return output
-end 
+end
 
 --Returns the unit vector / direction of a vector
 function vec3m.Direction(vec)
@@ -539,14 +756,14 @@ function vec3m.Perpendicular2(vec)
 
 end
 
---Extends a vector towards a vector
+--Extends a vector a distance
 function vec3m.Extend(vec, distance)
     ratio = (vec3m.Magnitude(vec) + distance) / (vec3m.Magnitude(vec))
     output = vec3m.VectorMag(vec, ratio)
     return output
 end
 
---Shortens a vector towards a vector
+--Shortens a vector a distance
 function vec3m.Shorten(vec, distance)
     ratio = (vec3m.Magnitude(vec) - distance) / (vec3m.Magnitude(vec))
     output = vec3m.VectorMag(vec, ratio)
@@ -819,10 +1036,10 @@ end
 function vec3m.in_list(tab, val)
     for index, value in ipairs(tab) do
         if value == val then
-            return true
+            return true, index
         end
     end
-    return false
+    return false, index
 end
 
 --Checks if target is invulnerable
@@ -833,7 +1050,7 @@ function vec3m.is_invulnerable(target)
     return false
 end
 
---Checks if targewt is immobile
+--Checks if target is immobile
 function vec3m.IsImmobile(target)
     if target:has_buff_type(5) or target:has_buff_type(11) or target:has_buff_type(29) or target:has_buff_type(24) or target:has_buff_type(10) then
         return true

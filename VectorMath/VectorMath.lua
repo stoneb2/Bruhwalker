@@ -6,232 +6,280 @@
 local file_name = "VectorMath.lua"
 if not file_manager:file_exists(file_name) then
    local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
-   http:download(url, file_name)
+   http:download_file(url, file_name)
    console:log("VectorMath Library Downloaded")
    console:log("Please Reload with F5")
 end
 
 --Initialization line:
-local vec3m = require "VectorMath"
+local ml = require "VectorMath"
 
 ----- Matrix Functions -----------------------------------------------------------------------------
 
 --Creates a New Matrix
-vec3m.NewMatrix(rows, columns, values)
+ml.NewMatrix(rows, columns, values)
 
 --Add two matrices
-vec3m.MatrixAdd(m1, m2)
+ml.MatrixAdd(m1, m2)
 
 --Subtract two matrices
-vec3m.MatrixSub(m1, m2)
+ml.MatrixSub(m1, m2)
 
 --Multiply two matrices
-vec3m.MatrixMult(m1, m2)
+ml.MatrixMult(m1, m2)
 
 --Matrix Type; Table, Tensor, Number
-vec3m.MatrixType(mtx)
+ml.MatrixType(mtx)
 
 --Copy Matrix
-vec3m.CopyMatrix(m1)
+ml.CopyMatrix(m1)
 
 --Concatenate two matrices, horizontal
-vec3m.ConcatH(m1, m2)
+ml.ConcatH(m1, m2)
 
 --Matrix Gaussian 
-vec3m.DoGauss(mtx)
+ml.DoGauss(mtx)
 
 --Submatrix out of matrix
-vec3m.SubM(m1, i1, j1, i2, j2)
+ml.SubM(m1, i1, j1, i2, j2)
 
 --Get inverted matrix
-vec3m.MatrixInvert(m1)
+ml.MatrixInvert(m1)
 
 --Divide two matrices
-vec3m.MatrixDiv(m1, m2)
+ml.MatrixDiv(m1, m2)
 
 --Multiply Matrix by Number
-vec3m.MatrixMultNum(m1, num)
+ml.MatrixMultNum(m1, num)
 
 --Divide Matrix by Number
-vec3m.MatrixDivNum(m1, num)
+ml.MatrixDivNum(m1, num)
 
 --Raise Matrix to a Power
-vec3m.MatrixPower(m1, num)
+ml.MatrixPower(m1, num)
 
 ----- Vector Functions -----------------------------------------------------------------------------
 
 --Converts from Radians to Degrees
-vec3m.R2D(radians)
+ml.R2D(radians)
 
 --Converts from Degrees to Radians
-vec3m.D2R(degrees)
+ml.D2R(degrees)
 
 --Add two vectors
-vec3m.Add(vec1, vec2)
+ml.Add(vec1, vec2)
 
 --Subtract two vectors
-vec3m.Sub(vec1, vec2)
+ml.Sub(vec1, vec2)
 
 --Center between two vectors
-vec3m.Center(vec1, vec2)
+ml.Center(vec1, vec2)
 
 --Multiplies vector by magnitude
-vec3m.VectorMag(vec, mag)
+ml.VectorMag(vec, mag)
 
 --Cross product of two vectors
-vec3m.CrossProduct(vec1, vec2)
+ml.CrossProduct(vec1, vec2)
 
 --Dot product of two vectors
-vec3m.DotProduct(vec1, vec2)
+ml.DotProduct(vec1, vec2)
 
 --Vector Magnitude / Length
-vec3m.Magnitude(vec)
+ml.Magnitude(vec)
 
 --Switches vector origin to local player
-vec3m.local_player_origin(vec)
+ml.local_player_origin(vec)
 
 --Switches vector back to normal league origin
-vec3m.league_origin(vec)
+ml.league_origin(vec)
 
 --Projects a vector on a vector
-vec3m.ProjectOn(vec1, vec2)
+ml.ProjectOn(vec1, vec2)
 
 --Mirrors a vector on a vector
-vec3m.MirrorOn(vec1, vec2)
+ml.MirrorOn(vec1, vec2)
 
 --Calculates sin of two vectors
-vec3m.Sin(vec1, vec2)
+ml.Sin(vec1, vec2)
 
 --Calculates cos of two vectors
-vec3m.Cos(vec1, vec2)
+ml.Cos(vec1, vec2)
 
 --Calculates angle between two vectors
-vec3m.Angle(vec1, vec2)
+ml.Angle(vec1, vec2)
+
+--Calculates angle between two 3D vectors
+ml.Angle3D(vec1, vec2)
 
 --Calculates the area between two vectors
-vec3m.AffineArea(vec1, vec2)
+ml.AffineArea(vec1, vec2)
 
 --Calculates triangular area between two vectors
-vec3m.TriangleArea(vec1, vec2)
+ml.TriangleArea(vec1, vec2)
 
---Rotates vector by phi around x-axis
-vec3m.RotateX(vec, phi)
+--Performs a 2D rotation of a vector, positive = ccw and negative = cw
+ml.Rotate(vec, phi)
 
---Rotates vector by phi around y-axis
-vec3m.RotateY(vec, phi)
+--Rotates 3D vector by phi around x-axis
+ml.RotateX3D(vec, phi)
 
---Rotates vector by phi around z-axis
-vec3m.RotateZ(vec, phi)
+--Rotates 3D vector by phi around y-axis
+ml.RotateY3D(vec, phi)
 
---Rotates a vector
-vec3m.Rotate(PhiX, PhiY, PhiZ)
+--Rotates 3D vector by phi around z-axis
+ml.RotateZ3D(vec, phi)
+
+--Rotates a 3D vector
+ml.Rotate3D(PhiX, PhiY, PhiZ)
 
 --Returns polar value
-vec3m.Polar(vec)
+ml.Polar(vec)
+
+--Returns cartesian value from polar
+ml.Cartesian(r, theta)
 
 --Returns the angle formed from a vector to both input vectors
-vec3m.AngleBetween(vec1, vec2)
+ml.AngleBetween(vec1, vec2)
 
 --Returns the unit vector / direction of a vector
-vec3m.Direction(vec)
+ml.Direction(vec)
 
 --Compares both vectors, returns difference
-vec3m.Compare(vec1, vec2)
+ml.Compare(vec1, vec2)
 
 --Creates a new vector that is rotated 90 degrees right
-vec3m.Perpendicular(vec)
+ml.Perpendicular(vec)
 
 --Creates a new vector that is rotated 90 degrees left
-vec3m.Perpendicular2(vec)
+ml.Perpendicular2(vec)
 
 --Extends a vector a distance
-vec3m.Extend(vec, distance)
+ml.Extend(vec, distance)
 
 --Shortens a vector a distance
-vec3m.Shorten(vec, distance)
+ml.Shorten(vec, distance)
 
 --Lerps from start to end with percentage length
-vec3m.Lerp(start_vec, end_vec, percentage)
+ml.Lerp(start_vec, end_vec, percentage)
+
+--Normalizes an angle between 0 and 360 degrees
+ml.AngleNorm(angle)
+
+--Returns the absolute value of difference between two angles
+ml.AngleDelta(angle1, angle2)
 
 ----- Game Functions -------------------------------------------------------------------------------
 
+--Checks if a unit is valid
+ml.IsValid(unit)
+
 --Returns size of table
-vec3m.size(table)
+ml.size(table)
 
 --Returns mouse position
-vec3m.GetMousePos()
+ml.GetMousePos()
 
---Returns distance between two objects
-vec3m.GetDistanceSqr(unit, p2)
+--Returns distance between a unit and a point
+ml.GetDistanceSqr(unit, p2)
+
+--Returns distance between two points
+ml.GetDistanceSqr2(p1, p2)
 
 --Returns a table of enemy heroes
-vec3m.GetEnemyHeroes()
+ml.GetEnemyHeroes()
 
 --Returns a table of ally heroes
-vec3m.GetAllyHeroes()
+ml.GetAllyHeroes()
 
 --Returns shielded health of object
-vec3m.GetShieldedHealth(damageType, target)
+ml.GetShieldedHealth(damageType, target)
 
 --Returns buff count
-vec3m.GotBuff(unit, buffname)
+ml.GotBuff(unit, buffname)
 
 --Checks if unit has a specific buff
-vec3m.HasBuff(unit, buffname)
+ml.HasBuff(unit, buffname)
 
 --Counts enemies within range
-vec3m.GetEnemyCount(pos, range)
+ml.GetEnemyCount(pos, range)
 
 --Counts minions within range
-vec3m.GetMinionCount(pos, range)
+ml.GetMinionCount(pos, range)
 
 --Counts jungle monsters within range
-vec3m.GetJungleMinionCount(pos, range)
+ml.GetJungleMinionCount(pos, range)
 
 --Checks if a spell slot is ready to cast
-vec3m.Ready(spell)
-
---Checks if a unit is valid
-vec3m.IsValid(unit)
+ml.Ready(spell)
 
 --Checks if a unit is under tower
-vec3m.is_under_tower(target)
+ml.is_under_tower(target)
 
 --Returns closest jungle monster
-vec3m.GetClosestJungle()
+ml.GetClosestJungle(pos, range)
 
 --Returns closest minion
-vec3m.GetClosestMinion()
+ml.GetClosestMinion(pos, range)
 
 --Returns closest minion to an enemy
-vec3m.GetClosestMinionToEnemy()
+ml.GetClosestMinionToEnemy(pos, range)
 
 --Returns closest jungle monster to an enemy
-vec3m.GetClosestJungleEnemy()
+ml.GetClosestJungleEnemy(pos, range)
 
 --Checks if a value is in a table
-vec3m.in_list(tab, val)
+ml.in_list(tab, val)
 
 --Checks if target is invulnerable
-vec3m.is_invulnerable(target)
+ml.is_invulnerable(target)
 
 --Checks if target is immobile
-vec3m.IsImmobile(target)
+ml.IsImmobile(target)
 
 --Creates a table of items in inventory
-vec3m.GetItems()
+ml.GetItems()
 
 --Converts string to item slot variable
-vec3m.SlotSet(slot_str)
+ml.SlotSet(slot_str)
 
---Calculates On-Hit Damage 
-vec3m.OnHitDmg(target, effectiveness)
+--Calculates On-Hit Damage, 1 for 100% effectiveness (some on-hit abilities do not apply at 100%) 
+ml.OnHitDmg(target, effectiveness)
+
+--Calculates the centroid of a set of points
+ml.GetCenter(points)
+
+--Checks if a circle contains all given points
+ml.ContainsThemAll(circle, points)
+
+--Returns furthest point from given position
+ml.FarthestFromPositionIndex(points, position)
+
+--Removes the farthest target from list
+ml.RemoveWorst(targets, position)
+
+--Returns targets within given radius of main target
+ml.GetInitialTargets(radius, main_target)
+
+--Returns predicted target positions
+ml.GetPredictedInitialTargets(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
+
+--Returns best AOE cast position for a target
+ml.GetBestAOEPosition(speed ,delay, range, radius, main_target, ColWindwall, ColMinion)
+
+--Adding this function to on_draw callback event draws ml.GetBestAOEPosition cast position and target hit count on the map
+ml.AOEDraw()
+
+--Returns whether or not a point is on a given line segment
+ml.VectorPointProjectionOnLineSegment(v1, v2, v)
+
+--Returns how many targets will be hit by pred / cast position
+ml.GetLineTargetCount(source, aimPos, delay, speed, width)
 
 --]]
 
 do
     local function AutoUpdate()
-        local Version = 3
+        local Version = 4
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -248,9 +296,10 @@ do
     AutoUpdate()
 end
 
-local vec3m = {}
+local ml = {}
 
 local_player = game.local_player
+myHero = game.local_player
 
 -- Matrix Functions ----------------------------------------------------------------------------------------
 
@@ -269,7 +318,7 @@ local t_copy = function(t)
 end
 
 --Creates a New Matrix
-function vec3m.NewMatrix(rows, columns, values)
+function ml.NewMatrix(rows, columns, values)
     if type(rows) == "table" then
         if type(rows[1]) ~= "table" then
             return setmetatable({{rows[1]}, {rows[2]}, {rows[3]}}, matrix_meta)
@@ -303,7 +352,7 @@ end
 --setmetatable(matrix, {__call = function( ... ) return matrix.new( ... ) end})
 
 --Add two matrices
-function vec3m.MatrixAdd(m1, m2)
+function ml.MatrixAdd(m1, m2)
     local mtx = {}
     for i = 1, #m1 do
         local m3i = {}
@@ -316,7 +365,7 @@ function vec3m.MatrixAdd(m1, m2)
 end
 
 --Subtract two matrices
-function vec3m.MatrixSub(m1, m2)
+function ml.MatrixSub(m1, m2)
     local mtx = {}
     for i = 1, #m1 do
         local m3i = {}
@@ -329,7 +378,7 @@ function vec3m.MatrixSub(m1, m2)
 end
 
 --Multiply two matrices
-function vec3m.MatrixMult(m1, m2)
+function ml.MatrixMult(m1, m2)
     local mtx = {}
     for i = 1, #m1 do
         mtx[i] = {}
@@ -345,7 +394,7 @@ function vec3m.MatrixMult(m1, m2)
 end
 
 --Matrix Type
-function vec3m.MatrixType(mtx)
+function ml.MatrixType(mtx)
     local e = mtx[1][1]
     if type(e) == "table" then
         if e.type then
@@ -357,8 +406,8 @@ function vec3m.MatrixType(mtx)
 end
 
 --Copy Matrix
-function vec3m.CopyMatrix(m1)
-    local docopy = vec3m.MatrixType(m1) == "number" and num_copy or t_copy
+function ml.CopyMatrix(m1)
+    local docopy = ml.MatrixType(m1) == "number" and num_copy or t_copy
     local mtx = {}
     for i = 1, #m1[1] do
         mtx[i] = {}
@@ -370,9 +419,9 @@ function vec3m.CopyMatrix(m1)
 end
 
 --Concatenate two matrices, horizontal
-function vec3m.ConcatH(m1, m2)
+function ml.ConcatH(m1, m2)
     assert(#m1 == #m2, "matrix size mismatch")
-    local docopy = vec3m.MatrixType(m1) == "number" and num_copy or t_copy
+    local docopy = ml.MatrixType(m1) == "number" and num_copy or t_copy
     local mtx = {}
     local offset = #m1[1]
     for i = 1, #m1 do
@@ -412,7 +461,7 @@ local function copy(x)
 end
 
 --Matrix Gaussian 
-function vec3m.DoGauss(mtx)
+function ml.DoGauss(mtx)
     local e = mtx[1][1]
     local zero = type(e) == "table" and e.zero or 0
     local one = type(e) == "table" and e.one or 1
@@ -453,8 +502,8 @@ function vec3m.DoGauss(mtx)
 end
 
 --Submatrix out of matrix
-function vec3m.SubM(m1, i1, j1, i2, j2)
-    local docopy = vec3m.MatrixType(m1) == "number" and num_copy or t_copy
+function ml.SubM(m1, i1, j1, i2, j2)
+    local docopy = ml.MatrixType(m1) == "number" and num_copy or t_copy
     local mtx = {}
     for i = i1, i2 do
         local _i = i - i1 + 1
@@ -468,9 +517,9 @@ function vec3m.SubM(m1, i1, j1, i2, j2)
 end
 
 --Get inverted matrix
-function vec3m.MatrixInvert(m1)
+function ml.MatrixInvert(m1)
     assert(#m1 == #m1[1], "matrix not square")
-    local mtx = vec3m.CopyMatrix(m1)
+    local mtx = ml.CopyMatrix(m1)
     local ident = setmetatable({}, matrix_meta)
     local e = m1[1][1]
     local zero = type(e) == "table" and e.zero or 0
@@ -482,25 +531,25 @@ function vec3m.MatrixInvert(m1)
             identi[i] = copy((i == j) and one or zero)
         end
     end
-    mtx = vec3m.ConcatH(mtx, ident)
-    local done, rank = vec3m.DoGauss(mtx)
+    mtx = ml.ConcatH(mtx, ident)
+    local done, rank = ml.DoGauss(mtx)
     if done then
-        return vec3m.SubM(mtx, 1, (#mtx[1] / 2) + 1, #mtx, #mtx[1])
+        return ml.SubM(mtx, 1, (#mtx[1] / 2) + 1, #mtx, #mtx[1])
     else
         return nil, rank
     end
 end
 
 --Divide two matrices
-function vec3m.MatrixDiv(m1, m2)
+function ml.MatrixDiv(m1, m2)
     local rank
-    m2, rank = vec3m.MatrixInvert(m2)
+    m2, rank = ml.MatrixInvert(m2)
     if not m2 then return m2j, rank end
-    return vec3m.MatrixMult(m1, m2)
+    return ml.MatrixMult(m1, m2)
 end
 
 --Multiply Matrix by Number
-function vec3m.MatrixMultNum(m1, num)
+function ml.MatrixMultNum(m1, num)
     local mtx = {}
     for i = 1, #m1 do
         mtx[i] = {}
@@ -512,7 +561,7 @@ function vec3m.MatrixMultNum(m1, num)
 end
 
 --Divide Matrix by Number
-function vec3m.MatrixDivNum(m1, num)
+function ml.MatrixDivNum(m1, num)
     local mtx = {}
     for i = 1, #m1 do
         local mtxi = {}
@@ -525,19 +574,19 @@ function vec3m.MatrixDivNum(m1, num)
 end
 
 --Raise Matrix to a Power
-function vec3m.MatrixPower(m1, num)
+function ml.MatrixPower(m1, num)
     assert(num == math.floor(num), "exponent not an integer")
     if num == 0 then
-        return vec3m.NewMatrix(#m1, "I")
+        return ml.NewMatrix(#m1, "I")
     end
     if num < 0 then
-        local rank; m1, rank = vec3m.MatrixInvert(m1)
+        local rank; m1, rank = ml.MatrixInvert(m1)
         if not m1 then return m1, rank end
         num = -num
     end
-    local mtx = vec3m.CopyMatrix(m1)
+    local mtx = ml.CopyMatrix(m1)
     for i = 2, num do
-        mtx = vec3m.MatrixMult(mtx, m1)
+        mtx = ml.MatrixMult(mtx, m1)
     end
     return mtx
 end
@@ -545,19 +594,19 @@ end
 -- Vector Functions ----------------------------------------------------------------------------------------
 
 --Converts from Radians to Degrees
-function vec3m.R2D(radians)
+function ml.R2D(radians)
     degrees = radians * (180 / math.pi)
     return degrees
 end
 
 --Converts from Degrees to Radians
-function vec3m.D2R(degrees)
+function ml.D2R(degrees)
     radians = degrees * (math.pi / 180)
     return radians
 end
 
 --Add two vectors
-function vec3m.Add(vec1, vec2)
+function ml.Add(vec1, vec2)
     new_x = vec1.x + vec2.x
     new_y = vec1.y + vec2.y
     new_z = vec1.z + vec2.z
@@ -566,7 +615,7 @@ function vec3m.Add(vec1, vec2)
 end
 
 --Subtract two vectors
-function vec3m.Sub(vec1, vec2)
+function ml.Sub(vec1, vec2)
     new_x = vec1.x - vec2.x
     new_y = vec1.y - vec2.y
     new_z = vec1.z - vec2.z
@@ -575,7 +624,7 @@ function vec3m.Sub(vec1, vec2)
 end
 
 --Center between two vectors
-function vec3m.Center(vec1, vec2)
+function ml.Center(vec1, vec2)
     new_x = 0.5 * (vec1.x + vec2.x)
     new_y = 0.5 * (vec1.y + vec2.y)
     new_z = 0.5 * (vec1.z + vec2.z)
@@ -584,7 +633,7 @@ function vec3m.Center(vec1, vec2)
 end
 
 --Multiplies vector by magnitude
-function vec3m.VectorMag(vec, mag)
+function ml.VectorMag(vec, mag)
     x, y, z = vec.x, vec.y, vec.z
     new_x = mag * x 
     new_y = mag * y 
@@ -594,7 +643,7 @@ function vec3m.VectorMag(vec, mag)
 end
 
 --Cross product of two vectors
-function vec3m.CrossProduct(vec1, vec2)
+function ml.CrossProduct(vec1, vec2)
     new_x = (vec1.y * vec2.z) - (vec1.z * vec2.y)
     new_y = (vec1.z * vec2.x) - (vec1.x * vec2.z)
     new_z = (vec1.x * vec2.y) - (vec1.y * vec2.x)
@@ -603,188 +652,245 @@ function vec3m.CrossProduct(vec1, vec2)
 end
 
 --Dot product of two vectors
-function vec3m.DotProduct(vec1, vec2)
+function ml.DotProduct(vec1, vec2)
     dot = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z)
     return dot
 end
 
 --Vector Magnitude
-function vec3m.Magnitude(vec)
+function ml.Magnitude(vec)
     mag = math.sqrt(vec.x^2 + vec.y^2 + vec.z^2)
     return mag
 end
 
 --Switches vector origin to local player
-function vec3m.local_player_origin(vec)
-    output = vec3m.Sub(vec, local_player.origin)
+function ml.local_player_origin(vec)
+    output = ml.Sub(vec, local_player.origin)
     return output
 end
 
 --Switches vector back to normal league origin
-function vec3m.league_origin(vec)
-    output = vec3m.Add(vec, local_player.origin)
+function ml.league_origin(vec)
+    output = ml.Add(vec, local_player.origin)
     return output
 end
 
 --Projects a vector on a vector
-function vec3m.ProjectOn(vec1, vec2)
+function ml.ProjectOn(vec1, vec2)
     
 end
 
 --Mirrors a vector on a vector
-function vec3m.MirrorOn(vec1, vec2)
+function ml.MirrorOn(vec1, vec2)
 
 end
 
 --Calculates sin of two vectors
-function vec3m.Sin(vec1, vec2)
+function ml.Sin(vec1, vec2)
 
 end
 
 --Calculates cos of two vectors
-function vec3m.Cos(vec1, vec2)
+function ml.Cos(vec1, vec2)
 
 end
 
---Calculates angle between two vectors
-function vec3m.Angle(vec1, vec2)
-    dot = vec3m.DotProduct(vec1, vec2)
-    mag1 = vec3m.Magnitude(vec1)
-    mag2 = vec3m.Magnitude(vec2)
-    output = vec3m.R2D(math.acos(dot / (mag1 * mag2)))
+--Calculates the angle between two vectors
+function ml.Angle(vec1, vec2)
+    delta_x = vec1.x - vec2.x
+    delta_z = vec1.z - vec2.z
+    angle = ml.R2D(math.atan2(delta_z, delta_x)) + 180
+    return angle
+end
+
+--Calculates angle between two 3D vectors
+function ml.Angle3D(vec1, vec2)
+    dot = ml.DotProduct(vec1, vec2)
+    mag1 = ml.Magnitude(vec1)
+    mag2 = ml.Magnitude(vec2)
+    output = ml.R2D(math.acos(dot / (mag1 * mag2)))
     return output
 end
 
 --Calculates the area between two vectors
-function vec3m.AffineArea(vec1, vec2)
-    cross = vec3m.CrossProduct(vec1, vec2)
-    mag = vec3m.Magnitude(cross)
+function ml.AffineArea(vec1, vec2)
+    cross = ml.CrossProduct(vec1, vec2)
+    mag = ml.Magnitude(cross)
     return mag
 end
 
 --Calculates triangular area between two vectors
-function vec3m.TriangleArea(vec1, vec2)
-    cross = vec3m.CrossProduct(vec1, vec2)
-    mag = vec3m.Magnitude(cross)
+function ml.TriangleArea(vec1, vec2)
+    cross = ml.CrossProduct(vec1, vec2)
+    mag = ml.Magnitude(cross)
     area = 0.5 * mag
     return area
 end
 
---Rotates vector by phi around x-axis
-function vec3m.RotateX(vec, phi)
-    values1 = {1, 0, 0, 0, math.cos(vec3m.D2R(phi)), -math.sin(vec3m.D2R(phi)), 0, math.sin(vec3m.D2R(phi)), math.cos(vec3m.D2R(phi))}
-    rotation = vec3m.NewMatrix(3, 3, values1)
+--Performs a 2D rotation of a vector, positive = ccw and negative = cw
+function ml.Rotate(vec, phi)
+    x, z = vec.x, vec.z
+    x2 = (x * math.cos(ml.D2R(phi))) - (y * math.sin(ml.D2R(phi)))
+    z2 = (x * math.sin(ml.D2R(phi))) + (y * math.cos(ml.D2R(phi)))
+    return x2, 0, z2
+end
+
+--Rotates 3D vector by phi around x-axis
+function ml.RotateX3D(vec, phi)
+    values1 = {1, 0, 0, 0, math.cos(ml.D2R(phi)), -math.sin(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), math.cos(ml.D2R(phi))}
+    rotation = ml.NewMatrix(3, 3, values1)
     values2 = {vec.x, vec.y, vec.z}
-    vector = vec3m.NewMatrix(3, 1, values2)
-    output = vec3m.MatrixMult(rotation, vector)
+    vector = ml.NewMatrix(3, 1, values2)
+    output = ml.MatrixMult(rotation, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
---Rotates vector by phi around y-axis
-function vec3m.RotateY(vec, phi)
-    values1 = {math.cos(vec3m.D2R(phi)), 0, math.sin(vec3m.D2R(phi)), 0, 1, 0, -math.sin(vec3m.D2R(phi)), 0, math.cos(vec3m.D2R(phi))}
-    rotation = vec3m.NewMatrix(3, 3, values1)
+--Rotates 3D vector by phi around y-axis
+function ml.RotateY3D(vec, phi)
+    values1 = {math.cos(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), 0, 1, 0, -math.sin(ml.D2R(phi)), 0, math.cos(ml.D2R(phi))}
+    rotation = ml.NewMatrix(3, 3, values1)
     values2 = {vec.x, vec.y, vec.z}
-    vector = vec3m.NewMatrix(3, 1, values2)
-    output = vec3m.MatrixMult(rotation, vector)
+    vector = ml.NewMatrix(3, 1, values2)
+    output = ml.MatrixMult(rotation, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
---Rotates vector by phi around z-axis
-function vec3m.RotateZ(vec, phi)
-    values1 = {math.cos(vec3m.D2R(phi)), -math.sin(vec3m.D2R(phi)), 0, math.sin(vec3m.D2R(phi)), math.cos(vec3m.D2R(phi)), 0, 0, 0, 1}
-    rotation = vec3m.NewMatrix(3, 3, values1)
+--Rotates 3D vector by phi around z-axis
+function ml.RotateZ3D(vec, phi)
+    values1 = {math.cos(ml.D2R(phi)), -math.sin(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), math.cos(ml.D2R(phi)), 0, 0, 0, 1}
+    rotation = ml.NewMatrix(3, 3, values1)
     values2 = {vec.x, vec.y, vec.z}
-    vector = vec3m.NewMatrix(3, 1, values2)
-    output = vec3m.MatrixMult(rotation, vector)
+    vector = ml.NewMatrix(3, 1, values2)
+    output = ml.MatrixMult(rotation, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end 
 
---Rotates a vector
-function vec3m.Rotate(PhiX, PhiY, PhiZ)
-    values1 = {1, 0, 0, 0, math.cos(vec3m.D2R(PhiX)), -math.sin(vec3m.D2R(PhiX)), 0, math.sin(vec3m.D2R(PhiX)), math.cos(vec3m.D2R(PhiX))}
-    values2 = {math.cos(vec3m.D2R(PhiY)), 0, math.sin(vec3m.D2R(PhiY)), 0, 1, 0, -math.sin(vec3m.D2R(PhiY)), 0, math.cos(vec3m.D2R(PhiY))}
-    values3 = {math.cos(vec3m.D2R(PhiZ)), -math.sin(vec3m.D2R(PhiZ)), 0, math.sin(vec3m.D2R(PhiZ)), math.cos(vec3m.D2R(PhiZ)), 0, 0, 0, 1}
-    rotation_x = vec3m.NewMatrix(3, 3, values1)
-    rotation_y = vec3m.NewMatrix(3, 3, values2)
-    rotation_z = vec3m.NewMatrix(3, 3, values3)
+--Rotates a 3D vector
+function ml.Rotate3D(PhiX, PhiY, PhiZ)
+    values1 = {1, 0, 0, 0, math.cos(ml.D2R(PhiX)), -math.sin(ml.D2R(PhiX)), 0, math.sin(ml.D2R(PhiX)), math.cos(ml.D2R(PhiX))}
+    values2 = {math.cos(ml.D2R(PhiY)), 0, math.sin(ml.D2R(PhiY)), 0, 1, 0, -math.sin(ml.D2R(PhiY)), 0, math.cos(ml.D2R(PhiY))}
+    values3 = {math.cos(ml.D2R(PhiZ)), -math.sin(ml.D2R(PhiZ)), 0, math.sin(ml.D2R(PhiZ)), math.cos(ml.D2R(PhiZ)), 0, 0, 0, 1}
+    rotation_x = ml.NewMatrix(3, 3, values1)
+    rotation_y = ml.NewMatrix(3, 3, values2)
+    rotation_z = ml.NewMatrix(3, 3, values3)
     values4 = {vec.x, vec.y, vec.z}
-    vector = vec3m.NewMatrix(3, 1, values4)
-    mult1 = vec3m.MatrixMult(rotation_x, rotation_y)
-    mult2 = vec3m.MatrixMult(mult1, rotation_z)
-    output = vec3m.MatrixMult(mult2, vector)
+    vector = ml.NewMatrix(3, 1, values4)
+    mult1 = ml.MatrixMult(rotation_x, rotation_y)
+    mult2 = ml.MatrixMult(mult1, rotation_z)
+    output = ml.MatrixMult(mult2, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
 --Returns polar value
-function vec3m.Polar(vec)
-
+function ml.Polar(vec)
+    x, y, z = vec.x, vec.y, vec.z
+    r = math.sqrt((x * x) + (z * z))
+    theta = ml.R2D(math.atan2(z, x))
+    return r, theta
 end
 
+--Returns cartesian value from polar
+function ml.Cartesian(r, theta)
+    x = r * math.cos(ml.D2R(theta))
+    z = r * math.sin(ml.D2R(theta))
+    return x, 0, z
+end
+
+-- ###################### UPDATE THIS
 --Returns the angle formed from a vector to both input vectors
-function vec3m.AngleBetween(vec1, vec2)
-    dot = vec3m.DotProduct(vec1, vec2)
-    mag1 = vec3m.Magnitude(vec1)
-    mag2 = vec3m.Magnitude(vec2)
-    output = vec3m.R2D(math.acos(dot / (mag1 * mag2)))
+function ml.AngleBetween(vec1, vec2)
+    dot = ml.DotProduct(vec1, vec2)
+    mag1 = ml.Magnitude(vec1)
+    mag2 = ml.Magnitude(vec2)
+    output = ml.R2D(math.acos(dot / (mag1 * mag2)))
     return output
 end
 
 --Returns the unit vector / direction of a vector
-function vec3m.Direction(vec)
+function ml.Direction(vec)
     output = vec:normalized()
     return output
 end
 
 --Compares both vectors, returns difference
-function vec3m.Compare(vec1, vec2)
+function ml.Compare(vec1, vec2)
     if vec1 == vec2 then
         output = vec3.new(0, 0, 0)
     else
-        output = vec3m.Sub(vec1, vec2)
+        output = ml.Sub(vec1, vec2)
     end
     return output
 end
 
 --Creates a new vector that is rotated 90 degrees right
-function vec3m.Perpendicular(vec)
+function ml.Perpendicular(vec)
 
 end
 
 --Creates a new vector that is rotated 90 degrees left
-function vec3m.Perpendicular2(vec)
+function ml.Perpendicular2(vec)
 
 end
 
 --Extends a vector a distance
-function vec3m.Extend(vec, distance)
-    ratio = (vec3m.Magnitude(vec) + distance) / (vec3m.Magnitude(vec))
-    output = vec3m.VectorMag(vec, ratio)
+function ml.Extend(vec, distance)
+    ratio = (ml.Magnitude(vec) + distance) / (ml.Magnitude(vec))
+    output = ml.VectorMag(vec, ratio)
     return output
 end
 
 --Shortens a vector a distance
-function vec3m.Shorten(vec, distance)
-    ratio = (vec3m.Magnitude(vec) - distance) / (vec3m.Magnitude(vec))
-    output = vec3m.VectorMag(vec, ratio)
+function ml.Shorten(vec, distance)
+    ratio = (ml.Magnitude(vec) - distance) / (ml.Magnitude(vec))
+    output = ml.VectorMag(vec, ratio)
     return output
 end
 
 --Lerps from start to end with percentage length
-function vec3m.Lerp(start_vec, end_vec, percentage)
+function ml.Lerp(start_vec, end_vec, percentage)
     if percentage > 1 then
         percentage = percentage / 100
     end
-    sub = vec3m.Sub(end_vec, start_vec)
-    mag = vec3m.VectorMag(sub, percentage)
-    output = vec3m.Add(start_vec, mag)
+    sub = ml.Sub(end_vec, start_vec)
+    mag = ml.VectorMag(sub, percentage)
+    output = ml.Add(start_vec, mag)
     return output
+end
+
+--Normalizes an angle between 0 and 360 degrees
+function ml.AngleNorm(angle)
+    if angle < 0 then
+        angle = angle + 360
+    elseif angle > 360 then
+        angle = angle - 360
+    end
+    return angle
+end
+
+--Returns the absolute value of difference between two angles
+function ml.AngleDelta(angle1, angle2)
+    local phi = math.fmod(math.abs(angle1 - angle2), 360)
+    local delta = 0
+    if phi > 180 then
+        delta = 360 - phi
+    else
+        delta = phi
+    end
+    return delta
 end
 
 -- Basic Game Functions ----------------------------------------------------------------------------------------
 
+--Checks if a unit is valid
+function ml.IsValid(unit)
+    if (unit and unit.is_targetable and unit.is_alive and unit.is_visible and unit.object_id and unit.health > 0) then
+        return true
+    end
+    return false
+end
+
 --Returns size of table
-function vec3m.size(table)
+function ml.size(table)
     local count = 0
     for _ in pairs(table) do
         count = count + 1
@@ -793,14 +899,14 @@ function vec3m.size(table)
 end
 
 --Returns mouse position
-function vec3m.GetMousePos()
+function ml.GetMousePos()
     x, y, z = game.mouse_pos.x, game.mouse_pos.y, game.mouse_pos.z
     local output = vec3.new(x, y, z)
     return output
 end
 
---Returns distance between two objects
-function vec3m.GetDistanceSqr(unit, p2)
+--Returns distance between a unit and a point
+function ml.GetDistanceSqr(unit, p2)
     p2 = p2 or local_player.origin
     p2x, p2y, p2z = p2.x, p2.y, p2.z
     p1 = unit.origin
@@ -810,8 +916,26 @@ function vec3m.GetDistanceSqr(unit, p2)
     return dx*dx + dz*dz
 end
 
+--Returns distance between two points
+function ml.GetDistanceSqr2(p1, p2)
+    p2x, p2y, p2z = p2.x, p2.y, p2.z
+    p1x, p1y, p1z = p1.x, p1.y, p1.z
+    local dx = p1x - p2x
+    local dz = (p1z or p1y) - (p2z or p2y)
+    return dx*dx + dz*dz
+end
+
+--Returns distance between two objects also
+function ml.GetDistanceSqr2(p1, p2)
+    p2x, p2y, p2z = p2.x, p2.y, p2.z
+    p1x, p1y, p1z = p1.x, p1.y, p1.z
+    local dx = p1x - p2x
+    local dz = (p1z or p1y) - (p2z or p2y)
+    return dx*dx + dz*dz
+end
+
 --Returns a table of enemy heroes
-function vec3m.GetEnemyHeroes()
+function ml.GetEnemyHeroes()
     local _EnemyHeroes = {}
 	players = game.players	
 	for i, unit in ipairs(players) do
@@ -823,7 +947,7 @@ function vec3m.GetEnemyHeroes()
 end
 
 --Returns a table of ally heroes
-function vec3m.GetAllyHeroes()
+function ml.GetAllyHeroes()
     local _AllyHeroes = {}
     players = game.players
     for i, unit in ipairs(players) do
@@ -835,20 +959,20 @@ function vec3m.GetAllyHeroes()
 end
 
 --Returns shielded health of object
-function vec3m.GetShieldedHealth(damageType, target)
+function ml.GetShieldedHealth(damageType, target)
     local shield = 0
     if damageType == "AD" then
         shield = target.shield
     elseif damageType == "AP" then
         shield = target.magic_shield
     elseif damageType == "ALL" then
-        shield = target.shield
+        shield = target.shield + target.magic_shield
     end
     return target.health + shield
 end
 
 --Returns buff count
-function vec3m.GotBuff(unit, buffname)
+function ml.GotBuff(unit, buffname)
     if unit:has_buff(buffname) then
         buff = unit:get_buff(buffname)
         if buff.count > 0 then
@@ -859,7 +983,7 @@ function vec3m.GotBuff(unit, buffname)
 end
 
 --Checks if unit has a specific buff
-function vec3m.HasBuff(unit, buffname)
+function ml.HasBuff(unit, buffname)
     if unit:has_buff(buffname) then
         buff = unit:get_buff(buffname)
         if buff.count > 0 then
@@ -870,12 +994,12 @@ function vec3m.HasBuff(unit, buffname)
 end
 
 --Counts enemies within range
-function vec3m.GetEnemyCount(pos, range)
+function ml.GetEnemyCount(pos, range)
     count = 0
     local enemies_in_range = {}
-	for i, hero in ipairs(GetEnemyHeroes()) do
+	for i, hero in ipairs(ml.GetEnemyHeroes()) do
 	    Range = range * range
-		if hero:distance_to(pos) < Range and IsValid(hero) then
+		if hero:distance_to(pos) < Range and ml.IsValid(hero) then
             table.insert(enemies_in_range, enemy)
             count = count + 1
 		end
@@ -884,13 +1008,13 @@ function vec3m.GetEnemyCount(pos, range)
 end
 
 --Counts minions within range
-function vec3m.GetMinionCount(pos, range)
+function ml.GetMinionCount(pos, range)
 	count = 0
     local enemies_in_range = {}
 	minions = game.minions
 	for i, minion in ipairs(minions) do
 	Range = range * range
-		if minion.is_enemy and IsValid(minion) and minion:distance_to(pos) < Range then
+		if minion.is_enemy and ml.IsValid(minion) and minion:distance_to(pos) < Range then
             table.insert(enemies_in_range, minion)
 			count = count + 1
 		end
@@ -899,13 +1023,13 @@ function vec3m.GetMinionCount(pos, range)
 end
 
 --Counts jungle monsters within range
-function vec3m.GetJungleMinionCount(pos, range)
+function ml.GetJungleMinionCount(pos, range)
     count = 0
     local enemies_in_range = {}
 	minions = game.jungle_minions
 	for i, minion in ipairs(minions) do
 	Range = range * range
-		if minion.is_enemy and IsValid(minion) and minion:distance_to(pos) < Range then
+		if minion.is_enemy and ml.IsValid(minion) and minion:distance_to(pos) < Range then
             table.insert(enemies_in_range, minion)
 			count = count + 1
 		end
@@ -914,20 +1038,12 @@ function vec3m.GetJungleMinionCount(pos, range)
 end
 
 --Checks if a spell slot is ready to cast
-function vec3m.Ready(spell)
+function ml.Ready(spell)
     return spellbook:can_cast(spell)
 end
 
---Checks if a unit is valid
-function vec3m.IsValid(unit)
-    if (unit and unit.is_targetable and unit.is_alive and unit.is_visible and unit.object_id and unit.health > 0) then
-        return true
-    end
-    return false
-end
-
 --Checks if a unit is under tower
-function vec3m.is_under_tower(target)
+function ml.is_under_tower(target)
     local turrets = game.turrets
     local turret_range = 800
     for i, unit in ipairs(turrets) do
@@ -941,9 +1057,8 @@ function vec3m.is_under_tower(target)
 end
 
 --Returns closest jungle monster
-function vec3m.GetClosestJungle()
-    local mousepos = GetMousePos()
-    local enemyMinions = GetJungleMinionCount(mousepos, spellE.range)
+function ml.GetClosestJungle(pos, range)
+    local enemyMinions = ml.GetJungleMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999 
     for i, minion in pairs(enemyMinions) do
@@ -961,9 +1076,8 @@ function vec3m.GetClosestJungle()
 end
 
 --Returns closest minion
-function vec3m.GetClosestMinion()
-    local mousepos = GetMousePos()
-    local enemyMinions = GetMinionCount(mousepos, spellE.range)
+function ml.GetClosestMinion(pos, range)
+    local enemyMinions = ml.GetMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999 
     for i, minion in pairs(enemyMinions) do
@@ -981,15 +1095,14 @@ function vec3m.GetClosestMinion()
 end
 
 --Returns closest minion to an enemy
-function vec3m.GetClosestMinionToEnemy()
-    local mousepos = GetMousePos()
-    local enemyMinions = GetMinionCount(mousepos, spellE.range)
+function ml.GetClosestMinionToEnemy(pos, range)
+    local enemyMinions = ml.GetMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999
-    local enemy = GetEnemyHeroes()
+    local enemy = ml.GetEnemyHeroes()
     for i, enemies in ipairs(enemy) do
-        if enemies and IsValid(enemies) then
-            local hp = GetShieldedHealth("AP", enemies)
+        if enemies and ml.IsValid(enemies) then
+            local hp = ml.GetShieldedHealth("AP", enemies)
             for i, minion in pairs(enemyMinions) do
                 if minion then
                     if minion:distance_to(enemies.origin) < spellQ.range then
@@ -1007,15 +1120,14 @@ function vec3m.GetClosestMinionToEnemy()
 end
 
 --Returns closest jungle monster to an enemy
-function vec3m.GetClosestJungleEnemy()
-    local mousepos = GetMousePos()
-    local enemyMinions = GetJungleMinionCount(mousepos, spellE.range)
+function ml.GetClosestJungleEnemy(pos, range)
+    local enemyMinions = ml.GetJungleMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999
-    local enemy = GetEnemyHeroes()
+    local enemy = ml.GetEnemyHeroes()
     for i, enemies in ipairs(enemy) do
-        if enemies and IsValid(enemies) then
-            local hp = GetShieldedHealth("AP", enemies)
+        if enemies and ml.IsValid(enemies) then
+            local hp = ml.GetShieldedHealth("AP", enemies)
             for i, minion in pairs(enemyMinions) do
                 if minion then
                     if minion:distance_to(enemies.origin) < spellQ.range then
@@ -1033,7 +1145,7 @@ function vec3m.GetClosestJungleEnemy()
 end
 
 --Checks if a value is in a table
-function vec3m.in_list(tab, val)
+function ml.in_list(tab, val)
     for index, value in ipairs(tab) do
         if value == val then
             return true, index
@@ -1042,16 +1154,18 @@ function vec3m.in_list(tab, val)
     return false, index
 end
 
+-- ############## Redo with strings instead of number
 --Checks if target is invulnerable
-function vec3m.is_invulnerable(target)
+function ml.is_invulnerable(target)
     if target:has_buff_type(18) then
         return true
     end
     return false
 end
 
+-- ############## Redo with strings instead of number
 --Checks if target is immobile
-function vec3m.IsImmobile(target)
+function ml.IsImmobile(target)
     if target:has_buff_type(5) or target:has_buff_type(11) or target:has_buff_type(29) or target:has_buff_type(24) or target:has_buff_type(10) then
         return true
     end
@@ -1059,10 +1173,10 @@ function vec3m.IsImmobile(target)
 end
 
 --Creates a table of items in inventory
-function vec3m.GetItems()
+function ml.GetItems()
     local inventory = {}
     for _, v in ipairs(local_player.items) do
-        if v and not in_list(inventory, v) then
+        if v and not ml.in_list(inventory, v) then
             table.insert(inventory, v.item_id)
         end
     end
@@ -1070,7 +1184,7 @@ function vec3m.GetItems()
 end
 
 --Converts string to item slot variable
-function vec3m.SlotSet(slot_str)
+function ml.SlotSet(slot_str)
     local output = 0
     if slot_str == "SLOT_ITEM1" then
         output = SLOT_ITEM1
@@ -1089,18 +1203,18 @@ function vec3m.SlotSet(slot_str)
 end
 
 --Calculates On-Hit Damage 
-function vec3m.OnHitDmg(target, effectiveness)
+function ml.OnHitDmg(target, effectiveness)
     local OH_AP = 0
     local OH_AD = 0
     local OH_TD = 0
     local damage = 0
-    local inventory = GetItems()
+    local inventory = ml.GetItems()
     for _, v in ipairs(inventory) do
         --BORK
         if tonumber(v) == 3153 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + 0.1*target.health
                 end
@@ -1109,7 +1223,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3742 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     --spell_slot.count, spell_slot.effect_amount, spell_slot.ammo_used for stacks?
                     local stacks = 100
@@ -1120,7 +1234,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6691 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + 65 + (0.25 * local_player.bonus_attack_damage)
                 end
@@ -1129,7 +1243,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6692 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + (0.06 * target.max_health)
                 end
@@ -1138,7 +1252,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3124 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     --This damage is affected by crit modifiers
                     --Confirm if this is decimal or percent
@@ -1149,7 +1263,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 2015 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AP = OH_AP + 80
                 end
@@ -1158,7 +1272,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3115 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AP = OH_AP + 15 + (0.2 * local_player.ability_power)
                 end
@@ -1167,7 +1281,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6670 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + 20
                 end
@@ -1176,7 +1290,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6677 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     --Confirm if this is decimal or percent
                     OH_AD = OH_AD + (1.75 * 100 * local_player.crit_chance)
@@ -1186,7 +1300,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3094 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AP = OH_AP + 120
                 end
@@ -1195,7 +1309,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 1043 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + 15
                 end
@@ -1204,7 +1318,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3095 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AP = OH_AP + 120
                 end
@@ -1213,7 +1327,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3077 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + (0.6 * local_player.total_attack_damage)
                 end
@@ -1222,7 +1336,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3748 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + 5 + (0.015 * local_player.max_health)
                 end
@@ -1231,7 +1345,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3078 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + (2 * local_player.base_attack_damage)
                 end 
@@ -1240,7 +1354,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3091 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     local level = local_player.level
                     OH_AP = OH_AP + ({15, 18.82, 22.65, 26.47, 30.29, 34.12, 37.94, 41.76, 45.59, 49.41, 53.24, 57.06, 60.88, 64.71, 68.53, 72.35, 76.18, 80})[level]
@@ -1250,7 +1364,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6632 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + math.max((1.5 * local_player.base_attack_damage), (0.1 * target.max_health))
                 end
@@ -1259,7 +1373,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3508 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + (local_player.base_attack_damage) + (0.4 * local_player.bonus_attack_damage)
                 end
@@ -1268,7 +1382,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3100 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AP = OH_AP + (1.5 * local_player.base_attack_damage) + (0.4 * local_player.ability_power)
                 end
@@ -1277,7 +1391,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 3057 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     OH_AD = OH_AD + (local_player.base_attack_damage)
                 end
@@ -1286,7 +1400,7 @@ function vec3m.OnHitDmg(target, effectiveness)
         elseif tonumber(v) == 6672 then
             local item = local_player:get_item((tonumber(v)))
             if item ~= 0 then
-                local slot = SlotSet("SLOT_ITEM"..tostring(item.slot))
+                local slot = ml.SlotSet("SLOT_ITEM"..tostring(item.slot))
                 if spellbook:can_cast(slot) then
                     --Confirm this can only be cast when third shot is up
                     OH_TD = OH_TD + 60 + (0.45 * local_player.bonus_attack_damage)
@@ -1298,4 +1412,140 @@ function vec3m.OnHitDmg(target, effectiveness)
     return damage
 end
 
-return vec3m
+--Calculates the centroid of a set of points
+function ml.GetCenter(points)
+    local sum_x = 0
+	local sum_z = 0
+	for i = 1, #points do
+		sum_x = sum_x + points[i].origin.x
+		sum_z = sum_z + points[i].origin.z
+	end
+	local center = {x = sum_x / #points, y = 0, z = sum_z / #points}
+	return center
+end
+
+--Checks if a circle contains all given points
+function ml.ContainsThemAll(circle, points)
+    local radius_sqr = circle.radi*circle.radi
+	local contains_them_all = true
+	local i = 1
+	while contains_them_all and i <= #points do
+		contains_them_all = ml.GetDistanceSqr2(points[i].origin, circle.center) <= radius_sqr
+		i = i + 1
+	end
+	return contains_them_all
+end
+
+--Returns furthest point from given position
+function ml.FarthestFromPositionIndex(points, position)
+    local index = 2
+	local actual_dist_sqr
+	local max_dist_sqr = ml.GetDistanceSqr2(points[index].origin, position)
+	for i = 3, #points do
+		actual_dist_sqr = ml.GetDistanceSqr2(points[i].origin, position)
+		if actual_dist_sqr > max_dist_sqr then
+			index = i
+			max_dist_sqr = actual_dist_sqr
+		end
+	end
+	return index
+end
+
+--Removes the farthest target from list
+function ml.RemoveWorst(targets, position)
+    local worst_target = ml.FarthestFromPositionIndex(targets, position)
+	table.remove(targets, worst_target)
+	return targets
+end
+
+--Returns targets within given radius of main target
+function ml.GetInitialTargets(radius, main_target)
+    local targets = {main_target}
+	local diameter_sqr = 4 * radius * radius
+	for i, target in ipairs(ml.GetEnemyHeroes()) do
+		if target.object_id ~= 0 and target.object_id ~= main_target.object_id and ml.IsValid(target) and ml.GetDistanceSqr(main_target, target) < diameter_sqr then
+			table.insert(targets, target)
+		end
+	end
+	return targets
+end
+
+--Returns predicted target positions
+function ml.GetPredictedInitialTargets(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
+	local predicted_main_target = pred:predict(speed ,delay, range, radius, main_target, ColWindwall, ColMinion)
+	if predicted_main_target.can_cast then
+		local predicted_targets = {main_target}
+		local diameter_sqr = 4 * radius * radius
+		for i, target in ipairs(ml.GetEnemyHeroes()) do
+			if target.object_id ~= 0 and ml.IsValid(target) then
+				predicted_target = pred:predict(math.huge, delay, 1800, radius, target, false, false)
+				if predicted_target.can_cast and target.object_id ~= main_target.object_id and ml.GetDistanceSqr2(predicted_main_target.cast_pos, predicted_target.cast_pos) < diameter_sqr then
+					table.insert(predicted_targets, target)
+				end
+			end
+		end
+	return predicted_targets
+	end
+end
+
+--Returns best AOE cast position for a target
+function ml.GetBestAOEPosition(speed ,delay, range, radius, main_target, ColWindwall, ColMinion)
+    local targets = ml.GetPredictedInitialTargets(speed ,delay, range, radius, main_target, ColWindwall, ColMinion) or GetInitialTargets(radius, main_target)
+	local position = ml.GetCenter(targets)
+	local best_pos_found = true
+	local circle = {pos = position, radi = radius}
+	circle.center = position
+	if #targets >= 2 then best_pos_found = ml.ContainsThemAll(circle, targets) end
+	while not best_pos_found do
+		targets = ml.RemoveWorst(targets, position)
+		position = ml.GetCenter(targets)
+		circle.center = position
+		best_pos_found = ml.ContainsThemAll(circle, targets)
+	end
+	return vec3.new(position.x, position.y, position.z), #targets
+end
+
+--Adding this function to on_draw callback event draws ml.GetBestAOEPosition cast position and target hit count on the map
+function ml.AOEDraw()
+    for i, unit in ipairs(ml.GetEnemyHeroes()) do
+		local Dist = myHero:distance_to(unit.origin)
+		if unit.object_id ~= 0 and ml.IsValid(unit) and Dist < 1500 then
+			local CastPos, targets = ml.GetBestAoEPosition(math.huge, 1.15, 1800, 240, unit, false, false)
+			if CastPos then
+				renderer:draw_circle(CastPos.x, CastPos.y, CastPos.z, 50, 0, 137, 255, 255)
+				screen_pos = game:world_to_screen(CastPos.x, CastPos.y, CastPos.z)
+				x, y = screen_pos.x, screen_pos.y
+				renderer:draw_text_big(x, y, "Count = "..tostring(targets), 220, 20, 60, 255)
+			end
+		end
+	end
+end
+
+--Returns whether or not a point is on a given line segment
+function ml.VectorPointProjectionOnLineSegment(v1, v2, v)
+    local cx, cy, ax, ay, bx, by = v.x, (v.z or v.y), v1.x, (v1.z or v1.y), v2.x, (v2.z or v2.y)
+    local rL = ((cx - ax) * (bx - ax) + (cy - ay) * (by - ay)) / ((bx - ax) * (bx - ax) + (by - ay) * (by - ay))
+    local pointLine = { x = ax + rL * (bx - ax), y = ay + rL * (by - ay) }
+    local rS = rL < 0 and 0 or (rL > 1 and 1 or rL)
+    local isOnSegment = rS == rL
+    local pointSegment = isOnSegment and pointLine or { x = ax + rS * (bx - ax), y = ay + rS * (by - ay) }
+    return pointSegment, pointLine, isOnSegment
+end
+
+--Returns how many targets will be hit by pred / cast position
+function ml.GetLineTargetCount(source, aimPos, delay, speed, width)
+    local Count = 0
+    players = game.players
+    for _, target in ipairs(players) do
+        local Range = 1100 * 1100
+        if target.object_id ~= 0 and ml.IsValid(target) and target.is_enemy and ml.GetDistanceSqr(myHero, target) < Range then
+            local pointSegment, pointLine, isOnSegment = ml.VectorPointProjectionOnLineSegment(source.origin, aimPos, target.origin)
+            if pointSegment and isOnSegment and (ml.GetDistanceSqr2(target.origin, pointSegment) <= (target.bounding_radius + width) * (target.bounding_radius + width)) then
+                Count = Count + 1
+            end
+        end
+    end
+    return Count
+end
+
+return ml

@@ -139,7 +139,7 @@ ml.Polar(vec)
 ml.Cartesian(r, theta)
 
 --Returns the angle formed from a vector to both input vectors
-ml.AngleBetween(vec1, vec2)
+ml.AngleBetween(input_vec, vec1, vec2)
 
 --Returns the unit vector / direction of a vector
 ml.Direction(vec)
@@ -212,8 +212,11 @@ ml.GetJungleMinionCount(pos, range)
 --Checks if a spell slot is ready to cast
 ml.Ready(spell)
 
---Checks if a unit is under tower
-ml.is_under_tower(target)
+--Checks if a unit is under ally tower
+ml.is_under_ally_tower(target)
+
+--Checks if a unit is under enemy tower
+ml.is_under_enemy_tower(target)
 
 --Returns closest jungle monster
 ml.GetClosestJungle(pos, range)
@@ -796,14 +799,11 @@ function ml.Cartesian(r, theta)
     return x, 0, z
 end
 
--- ###################### UPDATE THIS
 --Returns the angle formed from a vector to both input vectors
-function ml.AngleBetween(vec1, vec2)
-    dot = ml.DotProduct(vec1, vec2)
-    mag1 = ml.Magnitude(vec1)
-    mag2 = ml.Magnitude(vec2)
-    output = ml.R2D(math.acos(dot / (mag1 * mag2)))
-    return output
+function ml.AngleBetween(input_vec, vec1, vec2)
+    angle1 = ml.Angle(input_vec, vec1)
+    angle2 = ml.Angle(input_vec, vec2)
+    return angle1, angle2
 end
 
 --Returns the unit vector / direction of a vector
@@ -999,7 +999,7 @@ function ml.GetEnemyCount(pos, range)
     local enemies_in_range = {}
 	for i, hero in ipairs(ml.GetEnemyHeroes()) do
 	    Range = range * range
-		if hero:distance_to(pos) < Range and ml.IsValid(hero) then
+		if ml.GetDistanceSqr(hero, pos) < Range and ml.IsValid(hero) then
             table.insert(enemies_in_range, enemy)
             count = count + 1
 		end
@@ -1014,7 +1014,7 @@ function ml.GetMinionCount(pos, range)
 	minions = game.minions
 	for i, minion in ipairs(minions) do
 	Range = range * range
-		if minion.is_enemy and ml.IsValid(minion) and minion:distance_to(pos) < Range then
+		if minion.is_enemy and ml.IsValid(minion) and ml.GetDistanceSqr(minion, pos) < Range then
             table.insert(enemies_in_range, minion)
 			count = count + 1
 		end
@@ -1029,7 +1029,7 @@ function ml.GetJungleMinionCount(pos, range)
 	minions = game.jungle_minions
 	for i, minion in ipairs(minions) do
 	Range = range * range
-		if minion.is_enemy and ml.IsValid(minion) and minion:distance_to(pos) < Range then
+		if minion.is_jungle_minion and ml.IsValid(minion) and ml.GetDistanceSqr(minion, pos) < Range then
             table.insert(enemies_in_range, minion)
 			count = count + 1
 		end
@@ -1042,12 +1042,26 @@ function ml.Ready(spell)
     return spellbook:can_cast(spell)
 end
 
---Checks if a unit is under tower
-function ml.is_under_tower(target)
+--Checks if a unit is under ally tower
+function ml.is_under_ally_tower(target)
     local turrets = game.turrets
     local turret_range = 800
     for i, unit in ipairs(turrets) do
-        if unit and unit.is_turret and unit.is_alive then
+        if unit and unit.is_turret and unit.is_alive and unit.team == local_player.team then
+            if unit:distance_to(target.origin) <= turret_range then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+--Checks if a unit is under enemy tower
+function ml.is_under_enemy_tower(target)
+    local turrets = game.turrets
+    local turret_range = 800
+    for i, unit in ipairs(turrets) do
+        if unit and unit.is_turret and unit.is_alive and turret.is_enemy then
             if unit:distance_to(target.origin) <= turret_range then
                 return true
             end
@@ -1058,11 +1072,11 @@ end
 
 --Returns closest jungle monster
 function ml.GetClosestJungle(pos, range)
-    local enemyMinions = ml.GetJungleMinionCount(pos, range)
+    local enemyMinions, _ = ml.GetJungleMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999 
     for i, minion in pairs(enemyMinions) do
-        if minion and minion.object_id ~= local_player.object_id then
+        if minion then
             if minion:distance_to(mousepos) < 200 then
                 local minionDistanceToMouse = minion:distance_to(mousepos)
                 if minionDistanceToMouse < closestMinionDistance then
@@ -1077,11 +1091,11 @@ end
 
 --Returns closest minion
 function ml.GetClosestMinion(pos, range)
-    local enemyMinions = ml.GetMinionCount(pos, range)
+    local enemyMinions, _ = ml.GetMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999 
     for i, minion in pairs(enemyMinions) do
-        if minion and minion.object_id ~= local_player.object_id then
+        if minion then
             if minion:distance_to(mousepos) < 200 then
                 local minionDistanceToMouse = minion:distance_to(mousepos)
                 if minionDistanceToMouse < closestMinionDistance then
@@ -1096,7 +1110,7 @@ end
 
 --Returns closest minion to an enemy
 function ml.GetClosestMinionToEnemy(pos, range)
-    local enemyMinions = ml.GetMinionCount(pos, range)
+    local enemyMinions, _ = ml.GetMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999
     local enemy = ml.GetEnemyHeroes()
@@ -1105,7 +1119,7 @@ function ml.GetClosestMinionToEnemy(pos, range)
             local hp = ml.GetShieldedHealth("AP", enemies)
             for i, minion in pairs(enemyMinions) do
                 if minion then
-                    if minion:distance_to(enemies.origin) < spellQ.range then
+                    if minion:distance_to(enemies.origin) < range then
                         local minionDistanceToMouse = minion:distance_to(enemies.origin)
                         if minionDistanceToMouse < closestMinionDistance then
                             closestMinion = minion
@@ -1121,7 +1135,7 @@ end
 
 --Returns closest jungle monster to an enemy
 function ml.GetClosestJungleEnemy(pos, range)
-    local enemyMinions = ml.GetJungleMinionCount(pos, range)
+    local enemyMinions, _ = ml.GetJungleMinionCount(pos, range)
     local closestMinion = nil
     local closestMinionDistance = 9999
     local enemy = ml.GetEnemyHeroes()
@@ -1130,7 +1144,7 @@ function ml.GetClosestJungleEnemy(pos, range)
             local hp = ml.GetShieldedHealth("AP", enemies)
             for i, minion in pairs(enemyMinions) do
                 if minion then
-                    if minion:distance_to(enemies.origin) < spellQ.range then
+                    if minion:distance_to(enemies.origin) < range then
                         local minionDistanceToMouse = minion:distance_to(enemies.origin)
                         if minionDistanceToMouse < closestMinionDistance then
                             closestMinion = minion
@@ -1154,19 +1168,17 @@ function ml.in_list(tab, val)
     return false, index
 end
 
--- ############## Redo with strings instead of number
 --Checks if target is invulnerable
 function ml.is_invulnerable(target)
-    if target:has_buff_type(18) then
+    if target:has_buff_type("invulnerability") then
         return true
     end
     return false
 end
 
--- ############## Redo with strings instead of number
 --Checks if target is immobile
 function ml.IsImmobile(target)
-    if target:has_buff_type(5) or target:has_buff_type(11) or target:has_buff_type(29) or target:has_buff_type(24) or target:has_buff_type(10) then
+    if target:has_buff_type("stun") or target:has_buff_type("snare") or target:has_buff_type("knockup") or target:has_buff_type("suppression") or target:has_buff_type("slow") then
         return true
     end
     return false

@@ -279,16 +279,16 @@ ml.VectorPointProjectionOnLineSegment(v1, v2, v)
 ml.GetLineTargetCount(source, aimPos, delay, speed, width)
 
 --Returns count of minions within range of a given position
-function ml.MinionsAround(pos, range)
+ml.MinionsAround(pos, range)
 
 --Returns count of jungle monsters within range of a given position
-function ml.JungleMonstersAround(pos, range)
+ml.JungleMonstersAround(pos, range)
 
 --Returns position to hit most minions with circular AOE spells
-function ml.GetBestCircularFarmPos(unit, range, radius)
+ml.GetBestCircularFarmPos(unit, range, radius)
 
 --Returns position to hit most jungle monsters with circular AOE spells
-function ml.GetBestCircularJungPos(unit, range, radius)
+ml.GetBestCircularJungPos(unit, range, radius)
 
 --]]
 

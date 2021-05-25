@@ -153,11 +153,11 @@ ml.Perpendicular(vec)
 --Creates a new vector that is rotated 90 degrees left
 ml.Perpendicular2(vec)
 
---Extends a vector a distance
-ml.Extend(vec, distance)
+--Extends a vector from vec1 behind vec2 by a distance
+ml.Extend(vec1, vec2, distance)
 
---Shortens a vector a distance
-ml.Shorten(vec, distance)
+--Shortens a vector from vec1 in front vec2 by a distance
+ml.Shorten(vec1, vec2, distance)
 
 --Lerps from start to end with percentage length
 ml.Lerp(start_vec, end_vec, percentage)
@@ -294,7 +294,7 @@ ml.GetBestCircularJungPos(unit, range, radius)
 
 do
     local function AutoUpdate()
-        local Version = 5
+        local Version = 6
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -844,18 +844,20 @@ function ml.Perpendicular2(vec)
 
 end
 
---Extends a vector a distance
-function ml.Extend(vec, distance)
-    ratio = (ml.Magnitude(vec) + distance) / (ml.Magnitude(vec))
-    output = ml.VectorMag(vec, ratio)
-    return output
+--Extends a vector from vec1 behind vec2 by a distance
+function ml.Extend(vec1, vec2, distance)
+    direction = ml.Sub(vec2, vec1):normalized()
+    delta = ml.VectorMag(direction, distance)
+    position = ml.Add(direction, delta)
+    return position
 end
 
---Shortens a vector a distance
-function ml.Shorten(vec, distance)
-    ratio = (ml.Magnitude(vec) - distance) / (ml.Magnitude(vec))
-    output = ml.VectorMag(vec, ratio)
-    return output
+--Shortens a vector from vec1 in front vec2 by a distance
+function ml.Shorten(vec1, vec2, distance)
+    direction = ml.Sub(vec1, vec2, distance)
+    delta = ml.VectorMag(direction, distance)
+    position = ml.Add(direction, delta)
+    return position
 end
 
 --Lerps from start to end with percentage length

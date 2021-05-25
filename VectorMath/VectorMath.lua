@@ -263,7 +263,7 @@ ml.RemoveWorst(targets, position)
 --Returns targets within given radius of main target
 ml.GetInitialTargets(radius, main_target)
 
---Returns predicted target positions
+--Returns predicted target positions, returns nil if pred position cannot cast
 ml.GetPredictedInitialTargets(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
 
 --Returns best AOE cast position for a target
@@ -278,11 +278,23 @@ ml.VectorPointProjectionOnLineSegment(v1, v2, v)
 --Returns how many targets will be hit by pred / cast position
 ml.GetLineTargetCount(source, aimPos, delay, speed, width)
 
+--Returns count of minions within range of a given position
+function ml.MinionsAround(pos, range)
+
+--Returns count of jungle monsters within range of a given position
+function ml.JungleMonstersAround(pos, range)
+
+--Returns position to hit most minions with circular AOE spells
+function ml.GetBestCircularFarmPos(unit, range, radius)
+
+--Returns position to hit most jungle monsters with circular AOE spells
+function ml.GetBestCircularJungPos(unit, range, radius)
+
 --]]
 
 do
     local function AutoUpdate()
-        local Version = 4
+        local Version = 5
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -1482,7 +1494,7 @@ function ml.GetInitialTargets(radius, main_target)
 	return targets
 end
 
---Returns predicted target positions
+--Returns predicted target positions, returns nil if pred position cannot cast
 function ml.GetPredictedInitialTargets(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
 	local predicted_main_target = pred:predict(speed ,delay, range, radius, main_target, ColWindwall, ColMinion)
 	if predicted_main_target.can_cast then
@@ -1490,18 +1502,18 @@ function ml.GetPredictedInitialTargets(speed, delay, range, radius, main_target,
 		local diameter_sqr = 4 * radius * radius
 		for i, target in ipairs(ml.GetEnemyHeroes()) do
 			if target.object_id ~= 0 and ml.IsValid(target) then
-				predicted_target = pred:predict(math.huge, delay, 1800, radius, target, false, false)
+				predicted_target = pred:predict(math.huge, delay, range, radius, target, false, false)
 				if predicted_target.can_cast and target.object_id ~= main_target.object_id and ml.GetDistanceSqr2(predicted_main_target.cast_pos, predicted_target.cast_pos) < diameter_sqr then
 					table.insert(predicted_targets, target)
 				end
 			end
 		end
-	return predicted_targets
+	    return predicted_targets
 	end
 end
 
 --Returns best AOE cast position for a target
-function ml.GetBestAOEPosition(speed ,delay, range, radius, main_target, ColWindwall, ColMinion)
+function ml.GetBestAOEPosition(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
     local targets = ml.GetPredictedInitialTargets(speed ,delay, range, radius, main_target, ColWindwall, ColMinion) or GetInitialTargets(radius, main_target)
 	local position = ml.GetCenter(targets)
 	local best_pos_found = true
@@ -1518,11 +1530,11 @@ function ml.GetBestAOEPosition(speed ,delay, range, radius, main_target, ColWind
 end
 
 --Adding this function to on_draw callback event draws ml.GetBestAOEPosition cast position and target hit count on the map
-function ml.AOEDraw()
+function ml.AOEDraw(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
     for i, unit in ipairs(ml.GetEnemyHeroes()) do
 		local Dist = myHero:distance_to(unit.origin)
 		if unit.object_id ~= 0 and ml.IsValid(unit) and Dist < 1500 then
-			local CastPos, targets = ml.GetBestAoEPosition(math.huge, 1.15, 1800, 240, unit, false, false)
+			local CastPos, targets = ml.GetBestAoEPosition(speed, delay, range, radius, main_target, ColWindwall, ColMinion)
 			if CastPos then
 				renderer:draw_circle(CastPos.x, CastPos.y, CastPos.z, 50, 0, 137, 255, 255)
 				screen_pos = game:world_to_screen(CastPos.x, CastPos.y, CastPos.z)
@@ -1558,6 +1570,64 @@ function ml.GetLineTargetCount(source, aimPos, delay, speed, width)
         end
     end
     return Count
+end
+
+--Returns count of minions within range of a given position
+function ml.MinionsAround(pos, range)
+    local Count = 0
+    minions = game.minions
+    for i, m in ipairs(minions) do
+        if m.object_id ~= 0 and m.is_enemy and m.is_alive and m:distance_to(pos) < range then
+            Count = Count + 1
+        end
+    end
+    return Count
+end
+
+--Returns count of jungle monsters within range of a given position
+function ml.JungleMonstersAround(pos, range)
+    local Count = 0
+    minions = game.jungle_minions
+    for i, m in ipairs(minions) do
+        if m.object_id ~= 0 and m.is_enemy and m.is_alive and m:distance_to(pos) < range then
+            Count = Count + 1
+        end
+    end
+    return Count
+end
+
+--Returns position to hit most minions with circular AOE spells
+function ml.GetBestCircularFarmPos(unit, range, radius)
+    local BestPos = nil
+    local MostHit = 0
+    minions = game.minions
+    for i, m in ipairs(minions) do
+        if m.object_id ~= 0 and m.is_enemy and m.is_alive and unit:distance_to(m.origin) < range then
+            local Count = MinionsAround(m.origin, radius)
+            if Count > MostHit then
+                MostHit = Count
+                BestPos = m.origin
+            end
+        end
+    end
+    return BestPos, MostHit
+end
+
+--Returns position to hit most jungle monsters with circular AOE spells
+function ml.GetBestCircularJungPos(unit, range, radius)
+    local BestPos = nil
+    local MostHit = 0
+    minions = game.jungle_minions
+    for i, m in ipairs(minions) do
+        if m.object_id ~= 0 and m.is_enemy and m.is_alive and unit:distance_to(m.origin) < range then
+            local Count = MinionsAround(m.origin, radius)
+            if Count > MostHit then
+                MostHit = Count
+                BestPos = m.origin
+            end
+        end
+    end
+    return BestPos, MostHit
 end
 
 return ml

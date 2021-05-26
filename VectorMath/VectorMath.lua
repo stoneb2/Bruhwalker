@@ -294,7 +294,7 @@ ml.GetBestCircularJungPos(unit, range, radius)
 
 do
     local function AutoUpdate()
-        local Version = 6
+        local Version = 7
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -610,7 +610,7 @@ end
 
 --Converts from Radians to Degrees
 function ml.R2D(radians)
-    degrees = radians * (180 / math.pi)
+    local degrees = radians * (180 / math.pi)
     return degrees
 end
 
@@ -622,71 +622,71 @@ end
 
 --Add two vectors
 function ml.Add(vec1, vec2)
-    new_x = vec1.x + vec2.x
-    new_y = vec1.y + vec2.y
-    new_z = vec1.z + vec2.z
-    add = vec3.new(new_x, new_y, new_z)
+    local new_x = vec1.x + vec2.x
+    local new_y = vec1.y + vec2.y
+    local new_z = vec1.z + vec2.z
+    local add = vec3.new(new_x, new_y, new_z)
     return add
 end
 
 --Subtract two vectors
 function ml.Sub(vec1, vec2)
-    new_x = vec1.x - vec2.x
-    new_y = vec1.y - vec2.y
-    new_z = vec1.z - vec2.z
-    sub = vec3.new(new_x, new_y, new_z)
+    local new_x = vec1.x - vec2.x
+    local new_y = vec1.y - vec2.y
+    local new_z = vec1.z - vec2.z
+    local sub = vec3.new(new_x, new_y, new_z)
     return sub
 end
 
 --Center between two vectors
 function ml.Center(vec1, vec2)
-    new_x = 0.5 * (vec1.x + vec2.x)
-    new_y = 0.5 * (vec1.y + vec2.y)
-    new_z = 0.5 * (vec1.z + vec2.z)
-    center = vec3.new(new_x, new_y, new_z)
+    local new_x = 0.5 * (vec1.x + vec2.x)
+    local new_y = 0.5 * (vec1.y + vec2.y)
+    local new_z = 0.5 * (vec1.z + vec2.z)
+    local center = vec3.new(new_x, new_y, new_z)
     return center
 end
 
 --Multiplies vector by magnitude
 function ml.VectorMag(vec, mag)
-    x, y, z = vec.x, vec.y, vec.z
-    new_x = mag * x 
-    new_y = mag * y 
-    new_z = mag * z 
-    output = vec3.new(new_x, new_y, new_z)
+    local x, y, z = vec.x, vec.y, vec.z
+    local new_x = mag * x 
+    local new_y = mag * y 
+    local new_z = mag * z 
+    local output = vec3.new(new_x, new_y, new_z)
     return output
 end
 
 --Cross product of two vectors
 function ml.CrossProduct(vec1, vec2)
-    new_x = (vec1.y * vec2.z) - (vec1.z * vec2.y)
-    new_y = (vec1.z * vec2.x) - (vec1.x * vec2.z)
-    new_z = (vec1.x * vec2.y) - (vec1.y * vec2.x)
-    cross = vec3.new(new_x, new_y, new_z)
+    local new_x = (vec1.y * vec2.z) - (vec1.z * vec2.y)
+    local new_y = (vec1.z * vec2.x) - (vec1.x * vec2.z)
+    local new_z = (vec1.x * vec2.y) - (vec1.y * vec2.x)
+    local cross = vec3.new(new_x, new_y, new_z)
     return cross
 end
 
 --Dot product of two vectors
 function ml.DotProduct(vec1, vec2)
-    dot = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z)
+    local dot = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z)
     return dot
 end
 
 --Vector Magnitude
 function ml.Magnitude(vec)
-    mag = math.sqrt(vec.x^2 + vec.y^2 + vec.z^2)
+    local mag = math.sqrt(vec.x^2 + vec.y^2 + vec.z^2)
     return mag
 end
 
 --Switches vector origin to local player
 function ml.local_player_origin(vec)
-    output = ml.Sub(vec, local_player.origin)
+    local output = ml.Sub(vec, local_player.origin)
     return output
 end
 
 --Switches vector back to normal league origin
 function ml.league_origin(vec)
-    output = ml.Add(vec, local_player.origin)
+    local output = ml.Add(vec, local_player.origin)
     return output
 end
 
@@ -712,61 +712,61 @@ end
 
 --Calculates the angle between two vectors
 function ml.Angle(vec1, vec2)
-    delta_x = vec1.x - vec2.x
-    delta_z = vec1.z - vec2.z
-    angle = ml.R2D(math.atan2(delta_z, delta_x)) + 180
+    local delta_x = vec1.x - vec2.x
+    local delta_z = vec1.z - vec2.z
+    local angle = ml.R2D(math.atan2(delta_z, delta_x)) + 180
     return angle
 end
 
 --Calculates angle between two 3D vectors
 function ml.Angle3D(vec1, vec2)
-    dot = ml.DotProduct(vec1, vec2)
-    mag1 = ml.Magnitude(vec1)
-    mag2 = ml.Magnitude(vec2)
-    output = ml.R2D(math.acos(dot / (mag1 * mag2)))
+    local dot = ml.DotProduct(vec1, vec2)
+    local mag1 = ml.Magnitude(vec1)
+    local mag2 = ml.Magnitude(vec2)
+    local output = ml.R2D(math.acos(dot / (mag1 * mag2)))
     return output
 end
 
 --Calculates the area between two vectors
 function ml.AffineArea(vec1, vec2)
-    cross = ml.CrossProduct(vec1, vec2)
-    mag = ml.Magnitude(cross)
+    local cross = ml.CrossProduct(vec1, vec2)
+    local mag = ml.Magnitude(cross)
     return mag
 end
 
 --Calculates triangular area between two vectors
 function ml.TriangleArea(vec1, vec2)
-    cross = ml.CrossProduct(vec1, vec2)
-    mag = ml.Magnitude(cross)
-    area = 0.5 * mag
+    local cross = ml.CrossProduct(vec1, vec2)
+    local mag = ml.Magnitude(cross)
+    local area = 0.5 * mag
     return area
 end
 
 --Performs a 2D rotation of a vector, positive = ccw and negative = cw
 function ml.Rotate(vec, phi)
-    x, z = vec.x, vec.z
-    x2 = (x * math.cos(ml.D2R(phi))) - (y * math.sin(ml.D2R(phi)))
-    z2 = (x * math.sin(ml.D2R(phi))) + (y * math.cos(ml.D2R(phi)))
+    local x, z = vec.x, vec.z
+    local x2 = (x * math.cos(ml.D2R(phi))) - (y * math.sin(ml.D2R(phi)))
+    local z2 = (x * math.sin(ml.D2R(phi))) + (y * math.cos(ml.D2R(phi)))
     return x2, 0, z2
 end
 
 --Rotates 3D vector by phi around x-axis
 function ml.RotateX3D(vec, phi)
-    values1 = {1, 0, 0, 0, math.cos(ml.D2R(phi)), -math.sin(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), math.cos(ml.D2R(phi))}
-    rotation = ml.NewMatrix(3, 3, values1)
-    values2 = {vec.x, vec.y, vec.z}
-    vector = ml.NewMatrix(3, 1, values2)
-    output = ml.MatrixMult(rotation, vector)
+    local values1 = {1, 0, 0, 0, math.cos(ml.D2R(phi)), -math.sin(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), math.cos(ml.D2R(phi))}
+    local rotation = ml.NewMatrix(3, 3, values1)
+    local values2 = {vec.x, vec.y, vec.z}
+    local vector = ml.NewMatrix(3, 1, values2)
+    local output = ml.MatrixMult(rotation, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
 --Rotates 3D vector by phi around y-axis
 function ml.RotateY3D(vec, phi)
-    values1 = {math.cos(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), 0, 1, 0, -math.sin(ml.D2R(phi)), 0, math.cos(ml.D2R(phi))}
-    rotation = ml.NewMatrix(3, 3, values1)
-    values2 = {vec.x, vec.y, vec.z}
-    vector = ml.NewMatrix(3, 1, values2)
-    output = ml.MatrixMult(rotation, vector)
+    local values1 = {math.cos(ml.D2R(phi)), 0, math.sin(ml.D2R(phi)), 0, 1, 0, -math.sin(ml.D2R(phi)), 0, math.cos(ml.D2R(phi))}
+    local rotation = ml.NewMatrix(3, 3, values1)
+    local values2 = {vec.x, vec.y, vec.z}
+    local vector = ml.NewMatrix(3, 1, values2)
+    local output = ml.MatrixMult(rotation, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
@@ -782,54 +782,55 @@ end
 
 --Rotates a 3D vector
 function ml.Rotate3D(PhiX, PhiY, PhiZ)
-    values1 = {1, 0, 0, 0, math.cos(ml.D2R(PhiX)), -math.sin(ml.D2R(PhiX)), 0, math.sin(ml.D2R(PhiX)), math.cos(ml.D2R(PhiX))}
-    values2 = {math.cos(ml.D2R(PhiY)), 0, math.sin(ml.D2R(PhiY)), 0, 1, 0, -math.sin(ml.D2R(PhiY)), 0, math.cos(ml.D2R(PhiY))}
-    values3 = {math.cos(ml.D2R(PhiZ)), -math.sin(ml.D2R(PhiZ)), 0, math.sin(ml.D2R(PhiZ)), math.cos(ml.D2R(PhiZ)), 0, 0, 0, 1}
-    rotation_x = ml.NewMatrix(3, 3, values1)
-    rotation_y = ml.NewMatrix(3, 3, values2)
-    rotation_z = ml.NewMatrix(3, 3, values3)
-    values4 = {vec.x, vec.y, vec.z}
-    vector = ml.NewMatrix(3, 1, values4)
-    mult1 = ml.MatrixMult(rotation_x, rotation_y)
-    mult2 = ml.MatrixMult(mult1, rotation_z)
-    output = ml.MatrixMult(mult2, vector)
+    local values1 = {1, 0, 0, 0, math.cos(ml.D2R(PhiX)), -math.sin(ml.D2R(PhiX)), 0, math.sin(ml.D2R(PhiX)), math.cos(ml.D2R(PhiX))}
+    local values2 = {math.cos(ml.D2R(PhiY)), 0, math.sin(ml.D2R(PhiY)), 0, 1, 0, -math.sin(ml.D2R(PhiY)), 0, math.cos(ml.D2R(PhiY))}
+    local values3 = {math.cos(ml.D2R(PhiZ)), -math.sin(ml.D2R(PhiZ)), 0, math.sin(ml.D2R(PhiZ)), math.cos(ml.D2R(PhiZ)), 0, 0, 0, 1}
+    local rotation_x = ml.NewMatrix(3, 3, values1)
+    local rotation_y = ml.NewMatrix(3, 3, values2)
+    local rotation_z = ml.NewMatrix(3, 3, values3)
+    local values4 = {vec.x, vec.y, vec.z}
+    local vector = ml.NewMatrix(3, 1, values4)
+    local mult1 = ml.MatrixMult(rotation_x, rotation_y)
+    local mult2 = ml.MatrixMult(mult1, rotation_z)
+    local output = ml.MatrixMult(mult2, vector)
     return vec3.new(output[1][1], output[2][1], output[3][1])
 end
 
 --Returns polar value
 function ml.Polar(vec)
-    x, y, z = vec.x, vec.y, vec.z
-    r = math.sqrt((x * x) + (z * z))
-    theta = ml.R2D(math.atan2(z, x))
+    local x, y, z = vec.x, vec.y, vec.z
+    local r = math.sqrt((x * x) + (z * z))
+    local theta = ml.R2D(math.atan2(z, x))
     return r, theta
 end
 
 --Returns cartesian value from polar
 function ml.Cartesian(r, theta)
-    x = r * math.cos(ml.D2R(theta))
-    z = r * math.sin(ml.D2R(theta))
+    local x = r * math.cos(ml.D2R(theta))
+    local z = r * math.sin(ml.D2R(theta))
     return x, 0, z
 end
 
 --Returns the angle formed from a vector to both input vectors
 function ml.AngleBetween(input_vec, vec1, vec2)
-    angle1 = ml.Angle(input_vec, vec1)
-    angle2 = ml.Angle(input_vec, vec2)
+    local angle1 = ml.Angle(input_vec, vec1)
+    local angle2 = ml.Angle(input_vec, vec2)
     return angle1, angle2
 end
 
 --Returns the unit vector / direction of a vector
 function ml.Direction(vec)
-    output = vec:normalized()
+    local output = vec:normalized()
     return output
 end
 
 --Compares both vectors, returns difference
 function ml.Compare(vec1, vec2)
+    local output = vec3.new(0, 0, 0)
     if vec1 == vec2 then
-        output = vec3.new(0, 0, 0)
+        local output = vec3.new(0, 0, 0)
     else
-        output = ml.Sub(vec1, vec2)
+        local output = ml.Sub(vec1, vec2)
     end
     return output
 end
@@ -846,17 +847,17 @@ end
 
 --Extends a vector from vec1 behind vec2 by a distance
 function ml.Extend(vec1, vec2, distance)
-    direction = ml.Sub(vec2, vec1):normalized()
-    delta = ml.VectorMag(direction, distance)
-    position = ml.Add(direction, delta)
+    local direction = ml.Sub(vec2, vec1):normalized()
+    local delta = ml.VectorMag(direction, distance)
+    local position = ml.Add(vec2, delta)
     return position
 end
 
 --Shortens a vector from vec1 in front vec2 by a distance
 function ml.Shorten(vec1, vec2, distance)
-    direction = ml.Sub(vec1, vec2, distance)
-    delta = ml.VectorMag(direction, distance)
-    position = ml.Add(direction, delta)
+    local direction = ml.Sub(vec1, vec2, distance)
+    local delta = ml.VectorMag(direction, distance)
+    local position = ml.Add(direction, delta)
     return position
 end
 
@@ -865,9 +866,9 @@ function ml.Lerp(start_vec, end_vec, percentage)
     if percentage > 1 then
         percentage = percentage / 100
     end
-    sub = ml.Sub(end_vec, start_vec)
-    mag = ml.VectorMag(sub, percentage)
-    output = ml.Add(start_vec, mag)
+    local sub = ml.Sub(end_vec, start_vec)
+    local mag = ml.VectorMag(sub, percentage)
+    local output = ml.Add(start_vec, mag)
     return output
 end
 
@@ -914,7 +915,7 @@ end
 
 --Returns mouse position
 function ml.GetMousePos()
-    x, y, z = game.mouse_pos.x, game.mouse_pos.y, game.mouse_pos.z
+    local x, y, z = game.mouse_pos.x, game.mouse_pos.y, game.mouse_pos.z
     local output = vec3.new(x, y, z)
     return output
 end

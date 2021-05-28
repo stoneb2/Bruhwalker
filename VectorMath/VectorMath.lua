@@ -294,7 +294,7 @@ ml.GetBestCircularJungPos(unit, range, radius)
 
 do
     local function AutoUpdate()
-        local Version = 7
+        local Version = 8
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -1010,12 +1010,12 @@ end
 
 --Counts enemies within range
 function ml.GetEnemyCount(pos, range)
-    count = 0
+    local count = 0
     local enemies_in_range = {}
 	for i, hero in ipairs(ml.GetEnemyHeroes()) do
 	    Range = range * range
 		if ml.GetDistanceSqr(hero, pos) < Range and ml.IsValid(hero) then
-            table.insert(enemies_in_range, enemy)
+            table.insert(enemies_in_range, hero)
             count = count + 1
 		end
 	end
@@ -1631,6 +1631,14 @@ function ml.GetBestCircularJungPos(unit, range, radius)
         end
     end
     return BestPos, MostHit
+end
+
+--Returns true if a unit is killable (is not immune, and is not sion zombie)
+function ml.IsKillable(unit)
+    if unit:has_buff_type("spellimmunity") or unit:has_buff_type("physicalimmunity") or unit:has_buff_type("invulnerability") or unit:has_buff("sionpassivezombie") then
+        return true
+    end
+    return false
 end
 
 return ml

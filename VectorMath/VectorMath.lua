@@ -294,7 +294,7 @@ ml.GetBestCircularJungPos(unit, range, radius)
 
 do
     local function AutoUpdate()
-        local Version = 8
+        local Version = 9
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
@@ -1076,7 +1076,7 @@ function ml.is_under_enemy_tower(target)
     local turrets = game.turrets
     local turret_range = 800
     for i, unit in ipairs(turrets) do
-        if unit and unit.is_turret and unit.is_alive and turret.is_enemy then
+        if unit and unit.is_turret and unit.is_alive and unit.is_enemy then
             if unit:distance_to(target.origin) <= turret_range then
                 return true
             end
@@ -1185,7 +1185,7 @@ end
 
 --Checks if target is invulnerable
 function ml.is_invulnerable(target)
-    if target:has_buff_type("invulnerability") then
+    if target:has_buff_type(invulnerability) then
         return true
     end
     return false
@@ -1193,7 +1193,7 @@ end
 
 --Checks if target is immobile
 function ml.IsImmobile(target)
-    if target:has_buff_type("stun") or target:has_buff_type("snare") or target:has_buff_type("knockup") or target:has_buff_type("suppression") or target:has_buff_type("slow") then
+    if target:has_buff_type(stun) or target:has_buff_type(snare) or target:has_buff_type(knockup) or target:has_buff_type(suppression) or target:has_buff_type(slow) then
         return true
     end
     return false
@@ -1606,7 +1606,7 @@ function ml.GetBestCircularFarmPos(unit, range, radius)
     minions = game.minions
     for i, m in ipairs(minions) do
         if m.object_id ~= 0 and m.is_enemy and m.is_alive and unit:distance_to(m.origin) < range then
-            local Count = MinionsAround(m.origin, radius)
+            local Count = ml.MinionsAround(m.origin, radius)
             if Count > MostHit then
                 MostHit = Count
                 BestPos = m.origin
@@ -1623,7 +1623,7 @@ function ml.GetBestCircularJungPos(unit, range, radius)
     minions = game.jungle_minions
     for i, m in ipairs(minions) do
         if m.object_id ~= 0 and m.is_enemy and m.is_alive and unit:distance_to(m.origin) < range then
-            local Count = MinionsAround(m.origin, radius)
+            local Count = ml.JungleMonstersAround(m.origin, radius)
             if Count > MostHit then
                 MostHit = Count
                 BestPos = m.origin
@@ -1635,7 +1635,7 @@ end
 
 --Returns true if a unit is killable (is not immune, and is not sion zombie)
 function ml.IsKillable(unit)
-    if unit:has_buff_type("spellimmunity") or unit:has_buff_type("physicalimmunity") or unit:has_buff_type("invulnerability") or unit:has_buff("sionpassivezombie") then
+    if unit:has_buff_type(spellimmunity) or unit:has_buff_type(physicalimmunity) or unit:has_buff_type(invulnerability) or unit:has_buff(sionpassivezombie) then
         return true
     end
     return false

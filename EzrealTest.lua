@@ -18,7 +18,12 @@ local q_input = {
     hitbox = true
 }
 
-local TS = _G.TS(range = q_input.range, q = q_input) -- might be just _G.TS who tf knows
+local data = {
+    range = q_input.range,
+    q = q_input
+}
+
+local TS = _G.TS(data) -- might be just _G.TS who tf knows
 
 local function GetFirst(tab)
     if not next(tab) == nil then

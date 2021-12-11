@@ -1,6 +1,6 @@
 do
     local function AutoUpdate()
-        local Version = 1
+        local Version = 2
         local file_name = "fakecursor.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.version.txt")
@@ -24,6 +24,7 @@ else
 	console:log("Please Reload with F5")
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Cursor.png"
 	http:download_file(url, "Cursor.png")
+	break
 end
 
 if file_manager:file_exists("Attack.png") then
@@ -33,6 +34,7 @@ else
 	console:log("Please Reload with F5")
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Attack.png"
 	http:download_file(url, "Attack.png")
+	break
 end
 
 fake_cursor_category = menu:add_category("fake cursor")

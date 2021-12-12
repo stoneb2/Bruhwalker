@@ -1,6 +1,6 @@
 do
     local function AutoUpdate()
-        local Version = 2
+        local Version = 3
         local file_name = "fakecursor.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.version.txt")

@@ -24,7 +24,6 @@ else
 	console:log("Please Reload with F5")
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Cursor.png"
 	http:download_file(url, "Cursor.png")
-	break
 end
 
 if file_manager:file_exists("Attack.png") then
@@ -34,7 +33,6 @@ else
 	console:log("Please Reload with F5")
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Attack.png"
 	http:download_file(url, "Attack.png")
-	break
 end
 
 fake_cursor_category = menu:add_category("fake cursor")

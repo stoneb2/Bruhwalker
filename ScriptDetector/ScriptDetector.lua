@@ -88,7 +88,7 @@ local function on_draw()
     end
     for i, player in pairs(tracker) do
         averages[i] = #player.time / menu:get_value(time_limit_slider)
-        if averages[i] > 10 and not cheater_list[i] then --and i ~= local_player.object_id then
+        if averages[i] > 10 and not cheater_list[i] then and i ~= local_player.object_id then
             cheater_list[i] = true
             champ_name = game:get_object(i).champ_name
             game:print_chat("<font color='#9a7aa0'>" .. tostring(champ_name) .. " is scripting!</font>")

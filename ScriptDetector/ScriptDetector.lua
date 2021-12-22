@@ -17,6 +17,19 @@ do
     AutoUpdate()
 end
 
+local width = 377
+local height = 958
+local scaling_factor = 50
+if file_manager:file_exists("exclamation.png") then
+    sprite = renderer:add_sprite("exclamation.png", width / scaling_factor, height / scaling_factor)
+else
+    console:log("Cursor Sprite Downloaded")
+	console:log("Please Reload with F5")
+	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/ScriptDetector/exclamation.png"
+	http:download_file(url, "exclamation.png")
+    sprite = renderer:add_sprite("exclamation.png", width / scaling_factor, height / scaling_factor)
+end
+
 local_player = game.local_player
 
 waypoints = menu:add_category("Script Detector")
@@ -75,10 +88,10 @@ local function on_draw()
     end
     for i, player in pairs(tracker) do
         averages[i] = #player.time / menu:get_value(time_limit_slider)
-        if averages[i] > 10 and not cheater_list[i] and i ~= local_player.object_id then
+        if averages[i] > 10 and not cheater_list[i] then --and i ~= local_player.object_id then
             cheater_list[i] = true
             champ_name = game:get_object(i).champ_name
-            game:print_chat("<font color='#9a7aa0'>" .. tostring(champ_name) .. " is scripting!!!!!!</font>")
+            game:print_chat("<font color='#9a7aa0'>" .. tostring(champ_name) .. " is scripting!</font>")
         end
     end
     if menu:get_value(waypoint_draw) == 1 then
@@ -92,6 +105,12 @@ local function on_draw()
                     end
                     renderer:draw_text_centered(x, y, tostring(averages[player.object_id]), menu:get_value(color_r), menu:get_value(color_g), menu:get_value(color_b), menu:get_value(color_a))
                 end
+            end
+        end
+        for i, cheater in pairs(cheater_list) do
+            if cheater then
+                x, y = game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).x, game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).y
+                sprite:draw(x - 2.5, y - 5)
             end
         end
     end

@@ -1,6 +1,6 @@
 do
     local function AutoUpdate()
-        local Version = 3
+        local Version = 2
         local file_name = "ScriptDetector.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/ScriptDetector/ScriptDetector.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/ScriptDetector/ScriptDetector.version.txt")

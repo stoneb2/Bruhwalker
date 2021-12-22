@@ -17,12 +17,11 @@ do
     AutoUpdate()
 end
 
-local ml = require "VectorMath"
-
 local_player = game.local_player
 
 waypoints = menu:add_category("Script Detector")
 time_limit_slider = menu:add_slider("Average Time Length", waypoints, 1, 20, 5, "Time interval to collect waypoints. Works best at 5 seconds, do not recommend changing.")
+waypoint_draw = menu:add_checkbox("Draw Clicks per Second Below Champions", waypoints, 1)
 color_settings = menu:add_subcategory("Color Settings", waypoints)
 color_r = menu:add_slider("R", color_settings, 0, 255, 255)
 color_g = menu:add_slider("G", color_settings, 0, 255, 255)
@@ -82,15 +81,17 @@ local function on_draw()
             game:print_chat("<font color='#9a7aa0'>" .. tostring(champ_name) .. " is scripting!!!!!!</font>")
         end
     end
-    for i, player in ipairs(game.players) do
-        if player.is_visible and player.is_alive then
-            if averages[player.object_id] then
-                if player.object_id == local_player.object_id then
-                    x, y = game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).x, game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z - 25).y
-                else
-                    x, y = game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).x, game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).y
+    if menu:get_value(waypoint_draw) == 1 then
+        for i, player in ipairs(game.players) do
+            if player.is_visible and player.is_alive then
+                if averages[player.object_id] then
+                    if player.object_id == local_player.object_id then
+                        x, y = game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).x, game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z - 25).y
+                    else
+                        x, y = game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).x, game:world_to_screen_2(player.origin.x, player.origin.y, player.origin.z).y
+                    end
+                    renderer:draw_text_centered(x, y, tostring(averages[player.object_id]), menu:get_value(color_r), menu:get_value(color_g), menu:get_value(color_b), menu:get_value(color_a))
                 end
-                renderer:draw_text_centered(x, y, tostring(averages[player.object_id]), menu:get_value(color_r), menu:get_value(color_g), menu:get_value(color_b), menu:get_value(color_a))
             end
         end
     end

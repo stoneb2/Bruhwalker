@@ -1,6 +1,6 @@
 do
     local function AutoUpdate()
-        local Version = 3
+        local Version = 4
         local file_name = "ScriptDetector.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/ScriptDetector/ScriptDetector.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/ScriptDetector/ScriptDetector.version.txt")
@@ -33,6 +33,7 @@ end
 local_player = game.local_player
 
 waypoints = menu:add_category("Script Detector")
+cheater_limit = menu:add_slider("Cheater Clicks per Second Limit", 5, 50, 10, "The number of clicks per second to be labeled by the code as a scripter")
 time_limit_slider = menu:add_slider("Average Time Length", waypoints, 1, 20, 5, "Time interval to collect waypoints. Works best at 5 seconds, do not recommend changing.")
 waypoint_draw = menu:add_checkbox("Draw Clicks per Second Below Champions", waypoints, 1)
 color_settings = menu:add_subcategory("Color Settings", waypoints)
@@ -88,7 +89,7 @@ local function on_draw()
     end
     for i, player in pairs(tracker) do
         averages[i] = #player.time / menu:get_value(time_limit_slider)
-        if averages[i] > 10 and not cheater_list[i] and i ~= local_player.object_id then
+        if averages[i] > tonumber(menu:get_value(cheater_limit)) and not cheater_list[i] and i ~= local_player.object_id then
             cheater_list[i] = true
             champ_name = game:get_object(i).champ_name
             game:print_chat("<font color='#9a7aa0'>" .. tostring(champ_name) .. " is scripting!</font>")

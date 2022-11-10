@@ -1,6 +1,6 @@
 do
     local function AutoUpdate()
-        local Version = 4
+        local Version = 5
         local file_name = "fakecursor.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.version.txt")
@@ -17,13 +17,13 @@ do
     AutoUpdate()
 end
 
-if file_manager:file_exists("Cursor.png") then
-	sprite = renderer:add_sprite("Cursor.png", 28, 40)
+if file_manager:file_exists("CursorNameChange.png") then
+	sprite = renderer:add_sprite("CursorNameChange.png", 28, 40)
 else
 	console:log("Cursor Sprite Downloaded")
 	console:log("Please Reload with F5")
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Cursor.png"
-	http:download_file(url, "Cursor.png")
+	http:download_file(url, "CursorNameChange.png")
 end
 
 if file_manager:file_exists("Attack.png") then
@@ -35,17 +35,80 @@ else
 	http:download_file(url, "Attack.png")
 end
 
-fake_cursor_category = menu:add_category("fake cursor")
-fake_cursor_enabled = menu:add_checkbox("enabled", fake_cursor_category, 1)
-fake_cursor_speed = menu:add_slider("factor", fake_cursor_category, 5, 30, 5)
-spawn_fake_clicks = menu:add_checkbox("spawn fake click", fake_cursor_category, 1)
-fake_click_delay = menu:add_slider("fake click delay", fake_cursor_category, 0, 1000, 140)
-red_clicks = menu:add_checkbox("spawn red clicks (not perfect)", fake_cursor_category, 0)
+fake_cursor_category = menu:add_category("fake clicks")
+fake_cursor_enabled = menu:add_checkbox("Draw Fake Cursor", fake_cursor_category, 1)
+fake_cursor_speed = menu:add_slider("Cursor Speed Factor", fake_cursor_category, 5, 30, 5)
+spawn_fake_clicks = menu:add_checkbox("Spawn Fake Clicks", fake_cursor_category, 1)
+spawn_red_clicks = menu:add_checkbox("Spawn Red Clicks", fake_cursor_category, 1)
+fake_click_delay = menu:add_slider("Fake Click Delay", fake_cursor_category, 0, 1000, 300)
+extend = menu:add_slider("extend", fake_cursor_category, 0, 500, 250)
+randomize2 = menu:add_checkbox("randomize extend", fake_cursor_category, 1)
+click_near_enemy = menu:add_checkbox("click near enemy", fake_cursor_category, 1)
+randomize = menu:add_checkbox("randomize", fake_cursor_category, 0)
+combokey = menu:add_keybinder("Combo Key", fake_cursor_category, 32)
+clearkey = menu:add_keybinder("Clear Key", fake_cursor_category, string.byte("V"))
+lasthitkey = menu:add_keybinder("Last Hit Key", fake_cursor_category, string.byte("X"))
+harasskey = menu:add_keybinder("Harass Key", fake_cursor_category, string.byte("C"))
+fleekey = menu:add_keybinder("Flee Key", fake_cursor_category, string.byte("Z"))
 
-draw_pos = game.mouse_2d
-draw_pos_last = game.mouse_2d
-cast_pos = 0
-last_cast_time = 0.0
+local function on_new_path(obj, path)
+    if obj.object_id == game.local_player.object_id then
+        mode = combo:get_mode()
+
+		if game:is_key_down(menu:get_value(combokey)) or game:is_key_down(menu:get_value(clearkey)) or game:is_key_down(menu:get_value(lasthitkey)) or game:is_key_down(menu:get_value(harasskey)) or game:is_key_down(menu:get_value(fleekey)) then
+			game:spawn_fake_click(menu:get_value(fake_click_delay), 0)
+        --elseif evade:is_evading() then
+        --    game:spawn_fake_click_pos(vec3.new(pos.x, pos.y, pos.z), 0, 0)
+		end
+    end
+end
+
+local function on_pre_attack(target)
+	if menu:get_value(spawn_fake_clicks) == 1 and target.is_valid and not target.is_inhib and not target.is_nexus then
+        if target.champ_name ~= "SRU_Crab" then
+            origin = target.origin
+            
+            origin = target.origin
+            my_origin = game.local_player.origin
+            x, y, z = origin.x, origin.y, origin.z
+            x1, y1, z1 = my_origin.x, my_origin.y, my_origin.z
+
+            extend_val = menu:get_value(extend)
+
+            if menu:get_value(randomize2) == 1 then
+                extend_val = math.random(extend_val - 80, extend_val + 80)
+            end
+
+            calc = vector_math:add_to_direction(x, y, z, x1, y, z1, -extend_val)
+
+            origin = calc
+
+            if menu:get_value(click_near_enemy) == 1 then
+                if menu:get_value(randomize) == 1 then
+                    click_pos = vec3.new(origin.x + math.random(150,190), origin.y, origin.z + math.random(150,190))
+                else
+                    click_pos = vec3.new(origin.x, origin.y, origin.z)
+                end
+
+                game:spawn_fake_click_pos(click_pos, 0, 1)
+            else
+                game:spawn_fake_click(0, 1)
+            end
+        end
+	end
+
+    cast = true
+	cast_pos = vec3.new(game.local_player.origin.x + math.random(-15, 20), game.local_player.origin.y + math.random(-15, 20), 0)
+	if not moving then
+		moving = true
+		moving2 = true
+		draw_pos_last = game.mouse_2d
+		draw_pos_x = draw_pos_last.x
+		draw_pos_y = draw_pos_last.y
+	end
+	last_cast_time = game.game_time
+	cast = false
+end
 
 local function is_inregion(m1, m2, x, y)
 	x = x - 10
@@ -79,21 +142,13 @@ moving = false
 moving2 = false
 cast = false
 
+draw_pos_test = nil
+
 local function on_draw()
-	if menu:get_value(spawn_fake_clicks) == 1 then
-		mode = combo:get_mode()
-		if mode == MODE_HYBRID or mode == MODE_COMBO or mode == MODE_ORBWALKER or mode == MODE_LANECLEAR or mode == MODE_LASTHIT or mode == MODE_HARASS or mode == MODE_FLEE then
-			if not (moving or moving2) and not cast then
-				game:spawn_fake_click(menu:get_value(fake_click_delay), 0)
-			end
-		end
-	end
-
-	if cast then
-		game:spawn_fake_click(menu:get_value(fake_click_delay), 1)
-	end
-
-	if menu:get_value(fake_cursor_enabled) == 1 then
+    if draw_pos_test then
+        renderer:draw_circle(draw_pos_test.x, draw_pos_test.y, draw_pos_test.z, 50, 255, 0, 0, 255)
+    end
+    if menu:get_value(fake_cursor_enabled) == 1 then
 		speed = menu:get_value(fake_cursor_speed)
 		draw_attack_icon = false
 
@@ -117,11 +172,10 @@ local function on_draw()
 				distance = cast_pos:dist_to(draw_pos_x, draw_pos_y, 0)
 				speed_move = distance / speed
 		
-				draw_pos_x = draw_pos_x + speed_move * math.cos( angle );
-				draw_pos_y = draw_pos_y + speed_move * math.sin( angle );
+				draw_pos_x = draw_pos_x + speed_move * math.cos(angle);
+				draw_pos_y = draw_pos_y + speed_move * math.sin(angle);
 				
 				if is_inregion(draw_pos_x, draw_pos_y, tx, ty) then
-					--game:spawn_fake_click(menu:get_value(fake_click_delay), 1)
 					moving = false
 				end
 
@@ -142,11 +196,10 @@ local function on_draw()
 				distance = draw_pos:dist_to(draw_pos_x, draw_pos_y, 0)
 				speed_move = distance / speed
 		
-				draw_pos_x = draw_pos_x + speed_move * math.cos( angle );
-				draw_pos_y = draw_pos_y + speed_move * math.sin( angle );
+				draw_pos_x = draw_pos_x + speed_move * math.cos(angle);
+				draw_pos_y = draw_pos_y + speed_move * math.sin(angle);
 
 				if is_inregion(draw_pos_x, draw_pos_y, tx, ty) then
-					--game:spawn_fake_click(menu:get_value(fake_click_delay), 1)
 					moving2 = false
 				end
 
@@ -173,13 +226,10 @@ local function on_draw()
 end
 
 local function on_cast_skill(pos)
+    draw_pos_test = pos
 	cast = true
-	cast_pos = vec3.new(pos.x + math.random(-15,20), pos.y + math.random(-15,20), 0)
-	game:spawn_fake_click(menu:get_value(fake_click_delay), 1)
+	cast_pos = vec3.new(pos.x + math.random(-15, 20), pos.y + math.random(-15, 20), 0)
 	if not moving then
-		if menu:get_value(red_clicks) == 1 then
-			game:spawn_fake_click(menu:get_value(fake_click_delay), 1)
-		end
 		moving = true
 		moving2 = true
 		draw_pos_last = game.mouse_2d
@@ -190,5 +240,7 @@ local function on_cast_skill(pos)
 	cast = false
 end
 
+client:set_event_callback("on_new_path", on_new_path)
+client:set_event_callback("on_pre_attack", on_pre_attack)
 client:set_event_callback("on_draw_always", on_draw)
 client:set_event_callback("on_cast_skill", on_cast_skill)

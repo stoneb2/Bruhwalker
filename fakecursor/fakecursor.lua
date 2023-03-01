@@ -1,6 +1,7 @@
+---@diagnostic disable: undefined-global, lowercase-global
 do
     local function AutoUpdate()
-        local Version = 5
+        local Version = 6
         local file_name = "fakecursor.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.version.txt")
@@ -18,7 +19,7 @@ do
 end
 
 if file_manager:file_exists("CursorNameChange.png") then
-	sprite = renderer:add_sprite("CursorNameChange.png", 28, 40)
+	sprite1 = renderer:add_sprite("CursorNameChange.png", 28, 40)
 else
 	console:log("Cursor Sprite Downloaded")
 	console:log("Please Reload with F5")
@@ -34,6 +35,8 @@ else
 	local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/Attack.png"
 	http:download_file(url, "Attack.png")
 end
+
+local ml = require("VectorMath")
 
 fake_cursor_category = menu:add_category("fake clicks")
 fake_cursor_enabled = menu:add_checkbox("Draw Fake Cursor", fake_cursor_category, 1)
@@ -53,18 +56,50 @@ fleekey = menu:add_keybinder("Flee Key", fake_cursor_category, string.byte("Z"))
 
 local function on_new_path(obj, path)
     if obj.object_id == game.local_player.object_id then
-        mode = combo:get_mode()
-
 		if game:is_key_down(menu:get_value(combokey)) or game:is_key_down(menu:get_value(clearkey)) or game:is_key_down(menu:get_value(lasthitkey)) or game:is_key_down(menu:get_value(harasskey)) or game:is_key_down(menu:get_value(fleekey)) then
 			game:spawn_fake_click(menu:get_value(fake_click_delay), 0)
-        --elseif evade:is_evading() then
-        --    game:spawn_fake_click_pos(vec3.new(pos.x, pos.y, pos.z), 0, 0)
 		end
     end
 end
 
+last_order_type = nil
+red_click_target = nil
+local function on_issue_order(vec, order)
+	if order == 2 then
+		game:spawn_fake_click_pos(vec, menu:get_value(fake_click_delay), 0)
+	end
+
+	if order == 3 then
+		if last_order_type == 3 then
+			game:spawn_fake_click_pos(ml.GetMousePos(), 0, 0)
+		end
+
+		local name = string.lower(red_click_target.champ_name)
+		if red_click_target and name == "sru_crab" 
+			and not red_click_target.is_inhib 
+			and not red_click_target.is_nexus 
+			and name == "sru_razorbeakmini" then
+			return
+		end
+
+		local multiplier = 3
+		if red_target and (red_click_target.is_minion or red_click_target.is_jungle_minion) then
+			multiplier = 2
+		end
+		local max = red_click_target and multiplier * red_click_target.bounding_radius or 3 * 65
+		local basePos = red_click_target.origin
+		local deltaX = math.random(0, max)
+		local deltaY = math.random(0, max)
+		local clickPos = vec3.new(basePos.x + deltaX, basePos.y, basePos.z + deltaY)
+		game:spawn_fake_click_pos(clickPos, 0, 1)
+	end
+
+	last_order_type = order
+end
+
 local function on_pre_attack(target)
 	if menu:get_value(spawn_fake_clicks) == 1 and target.is_valid and not target.is_inhib and not target.is_nexus then
+		red_click_target = target
         if target.champ_name ~= "SRU_Crab" then
             origin = target.origin
             
@@ -89,10 +124,6 @@ local function on_pre_attack(target)
                 else
                     click_pos = vec3.new(origin.x, origin.y, origin.z)
                 end
-
-                game:spawn_fake_click_pos(click_pos, 0, 1)
-            else
-                game:spawn_fake_click(0, 1)
             end
         end
 	end
@@ -145,9 +176,14 @@ cast = false
 draw_pos_test = nil
 
 local function on_draw()
+	if draw_vec then
+		renderer:draw_circle(draw_vec.x, draw_vec.y, draw_vec.z, local_player.bounding_radius, 0, 0, 255)
+	end
+
     if draw_pos_test then
         renderer:draw_circle(draw_pos_test.x, draw_pos_test.y, draw_pos_test.z, 50, 255, 0, 0, 255)
     end
+
     if menu:get_value(fake_cursor_enabled) == 1 then
 		speed = menu:get_value(fake_cursor_speed)
 		draw_attack_icon = false
@@ -156,7 +192,7 @@ local function on_draw()
 
 		if under_mouse_object.is_enemy then
 			draw_attack_icon = true
-		end 
+		end
 
 		if moving2 then
 			if moving then
@@ -211,7 +247,7 @@ local function on_draw()
 			if draw_attack_icon then
 				sprite2:draw(draw_pos_x, draw_pos_y)
 			else
-				sprite:draw(draw_pos_x, draw_pos_y)
+				sprite1:draw(draw_pos_x, draw_pos_y)
 			end
 		else
 			draw_pos = game.mouse_2d
@@ -219,7 +255,7 @@ local function on_draw()
 			if draw_attack_icon then
 				sprite2:draw(draw_pos.x, draw_pos.y)
 			else
-				sprite:draw(draw_pos.x, draw_pos.y)
+				sprite1:draw(draw_pos.x, draw_pos.y)
 			end
 		end
 	end
@@ -244,3 +280,4 @@ client:set_event_callback("on_new_path", on_new_path)
 client:set_event_callback("on_pre_attack", on_pre_attack)
 client:set_event_callback("on_draw_always", on_draw)
 client:set_event_callback("on_cast_skill", on_cast_skill)
+client:set_event_callback("on_issue_order", on_issue_order)

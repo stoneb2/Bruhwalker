@@ -1,7 +1,7 @@
 ---@diagnostic disable: undefined-global, lowercase-global
 do
     local function AutoUpdate()
-        local Version = 6
+        local Version = 7
         local file_name = "fakecursor.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.lua"
         local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/fakecursor/fakecursor.version.txt")
@@ -203,7 +203,7 @@ local function on_draw()
 		
 				deltaX = tx - sx;
 				deltaY = ty - sy;
-				angle = math.atan(deltaY, deltaX)
+				angle = math.atan2(deltaY, deltaX)
 				
 				distance = cast_pos:dist_to(draw_pos_x, draw_pos_y, 0)
 				speed_move = distance / speed
@@ -227,7 +227,7 @@ local function on_draw()
 
 				deltaX = tx - sx;
 				deltaY = ty - sy;
-				angle = math.atan(deltaY, deltaX)
+				angle = math.atan2(deltaY, deltaX)
 
 				distance = draw_pos:dist_to(draw_pos_x, draw_pos_y, 0)
 				speed_move = distance / speed

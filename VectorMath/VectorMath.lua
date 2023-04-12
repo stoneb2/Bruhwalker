@@ -294,19 +294,19 @@ ml.GetBestCircularJungPos(unit, range, radius)
 
 do
     local function AutoUpdate()
-        local Version = 9
+        local Version = 10
         local file_name = "VectorMath.lua"
         local url = "https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.lua"
-        local web_version = http:get("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt")
-        console:log("VectorMath Version: "..Version)
-        console:log("VectorMath Web Version: "..tonumber(web_version))
-        if tonumber(web_version) == Version then
-            console:log("VectorMath Library successfully loaded")
-        else
-            http:download_file(url, file_name)
-            console:log("New VectorMath Library Update Available")
-            console:log("Please Reload with F5")
-        end
+        http:get_async("https://raw.githubusercontent.com/stoneb2/Bruhwalker/main/VectorMath/VectorMath.version.txt", function(success, web_version)
+			if tonumber(web_version) ~= Version then
+				http:download_file_async(url, file_name, function(success)
+					if success then
+                        console:log("New VectorMath Library Update Available")
+                        console:log("Please Reload with F5")
+					end
+				end)
+			end
+		end)
     end
     AutoUpdate()
 end
